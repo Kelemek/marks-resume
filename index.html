@@ -13,15 +13,15 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#top" class="nav-logo">Mark Dean Larson</a>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+                <span class="theme-text">Dark Mode</span>
+            </button>
             <div class="nav-links">
                 <a href="#profile">Profile</a>
                 <a href="#experience">Experience</a>
                 <a href="#skills">Skills</a>
                 <a href="#education">Education</a>
                 <a href="#contact">Contact</a>
-                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-                    <span class="theme-icon">🌙</span>
-                </button>
             </div>
         </div>
     </nav>
@@ -419,7 +419,7 @@
 
         // Theme Toggle Functionality
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.querySelector('.theme-icon');
+        const themeText = document.querySelector('.theme-text');
         const body = document.body;
 
         // Check for saved theme preference or default to dark theme
@@ -428,11 +428,11 @@
         
         if (savedTheme) {
             body.setAttribute('data-theme', savedTheme);
-            updateThemeIcon(savedTheme);
+            updateThemeText(savedTheme);
         } else if (!prefersDarkScheme) {
             // If user prefers light mode and no saved preference, switch to light
             body.setAttribute('data-theme', 'light');
-            updateThemeIcon('light');
+            updateThemeText('light');
         }
 
         // Theme toggle event listener
@@ -442,16 +442,16 @@
             
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateThemeIcon(newTheme);
+            updateThemeText(newTheme);
         });
 
-        // Update theme icon based on current theme
-        function updateThemeIcon(theme) {
+        // Update theme text based on current theme
+        function updateThemeText(theme) {
             if (theme === 'light') {
-                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Dark Mode';
                 themeToggle.setAttribute('aria-label', 'Switch to dark mode');
             } else {
-                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Light Mode';
                 themeToggle.setAttribute('aria-label', 'Switch to light mode');
             }
         }
@@ -461,7 +461,7 @@
             if (!localStorage.getItem('theme')) {
                 const theme = e.matches ? 'dark' : 'light';
                 body.setAttribute('data-theme', theme);
-                updateThemeIcon(theme);
+                updateThemeText(theme);
             }
         });
     </script>
