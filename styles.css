@@ -47,7 +47,7 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .nav-links a {
@@ -391,7 +391,7 @@ body {
     }
     
     .nav-links {
-        gap: 1rem;
+        gap: .5rem;
     }
     
     .container {
