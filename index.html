@@ -433,6 +433,9 @@
             // If user prefers light mode and no saved preference, switch to light
             body.setAttribute('data-theme', 'light');
             updateThemeText('light');
+        } else {
+            // Default dark theme case - update the text to show correct option
+            updateThemeText('dark');
         }
 
         // Theme toggle event listener
