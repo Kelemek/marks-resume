@@ -379,6 +379,20 @@ body {
     font-size: 0.9rem;
 }
 
+.contact-info .phone-link {
+    color: #a0aec0;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.contact-info .phone-link:hover,
+.contact-info .phone-link:focus {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
