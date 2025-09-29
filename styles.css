@@ -454,6 +454,20 @@ body {
     text-decoration: underline;
 }
 
+.contact-info .address-link {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.contact-info .address-link:hover,
+.contact-info .address-link:focus {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
 /* Responsive Design */
 @media (max-width: 950px) {
     .nav-container {
