@@ -551,6 +551,7 @@ body {
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 0.5rem;
     }
     
     .section {
