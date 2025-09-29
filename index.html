@@ -19,6 +19,9 @@
                 <a href="#skills">Skills</a>
                 <a href="#education">Education</a>
                 <a href="#contact">Contact</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
             </div>
         </div>
     </nav>
@@ -412,6 +415,54 @@
                     button.textContent = originalText;
                 }, 3000);
             });
+        });
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.querySelector('.theme-icon');
+        const body = document.body;
+
+        // Check for saved theme preference or default to dark theme
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        } else if (!prefersDarkScheme) {
+            // If user prefers light mode and no saved preference, switch to light
+            body.setAttribute('data-theme', 'light');
+            updateThemeIcon('light');
+        }
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        // Update theme icon based on current theme
+        function updateThemeIcon(theme) {
+            if (theme === 'light') {
+                themeIcon.textContent = '☀️';
+                themeToggle.setAttribute('aria-label', 'Switch to dark mode');
+            } else {
+                themeIcon.textContent = '🌙';
+                themeToggle.setAttribute('aria-label', 'Switch to light mode');
+            }
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                const theme = e.matches ? 'dark' : 'light';
+                body.setAttribute('data-theme', theme);
+                updateThemeIcon(theme);
+            }
         });
     </script>
 </body>
