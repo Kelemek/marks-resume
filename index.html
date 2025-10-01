@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -34,7 +35,7 @@
                 <p class="hero-subtitle">A Systems Engineer/Frontend Developer with <span id="hero-experience-years">29+</span> years of experience based in Cambridge, Minnesota.</p>
                 <div class="hero-contact">
                     <a href="mailto:markdlarson@me.com" class="contact-link">Get in touch</a>
-                    <button id="downloadPDF" class="contact-link pdf-button">Download PDF Resume</button>
+                    <button id="downloadPDF" class="contact-link pdf-button">Download Resume</button>
                 </div>
             </div>
         </section>
@@ -43,21 +44,24 @@
         <section id="profile" class="section">
             <div class="container">
                 <h2 class="section-title">Professional Profile</h2>
-                <p class="profile-text">
-                    Experienced Systems Engineer, Architect and Web Developer with <span id="experience-years">29+</span> years of comprehensive 
-                    IT experience spanning full-stack web development, enterprise virtualization, 
-                    and cloud infrastructure. Experience with designing and developing scalable 
-                    web applications using ASP.NET, VB.NET, JavaScript, and SQL, with proven experience 
-                    managing high-traffic eCommerce platforms including www.fingerhut.com and subsidiary 
-                    sites. Recently completed comprehensive Scrimba web development training (2025), 
-                    staying current with modern JavaScript frameworks and responsive design principles. 
-                    Expert in enterprise infrastructure management including Citrix environments, VMware 
-                    vSphere, Active Directory, and cloud platforms (AWS/Azure). Successfully led technology 
-                    migrations, automated deployment processes, and delivered performance optimizations 
-                    across web applications and virtualized infrastructure. Combines hands-on development 
-                    skills with strategic infrastructure architecture, demonstrating continuous learning 
-                    and adaptation to evolving web technologies.
-                </p>
+                <div class="profile-text">
+                    <p>
+                        Experienced Systems Engineer, Architect and Web Developer with <span id="experience-years">29+</span> years of comprehensive 
+                        IT experience spanning full-stack web development, enterprise virtualization, and cloud infrastructure. 
+                        Experience with designing and developing scalable web applications using ASP.NET, VB.NET, JavaScript, and SQL, 
+                        with proven experience managing high-traffic eCommerce platforms including www.fingerhut.com and subsidiary sites.
+                    </p>
+                    <p>
+                        Recently completed comprehensive Scrimba web development training (2025), staying current with modern JavaScript 
+                        frameworks and responsive design principles. Expert in enterprise infrastructure management including Citrix 
+                        environments, VMware vSphere, Active Directory, and cloud platforms (AWS/Azure).
+                    </p>
+                    <p>
+                        Successfully led technology migrations, automated deployment processes, and delivered performance optimizations 
+                        across web applications and virtualized infrastructure. Combines hands-on development skills with strategic 
+                        infrastructure architecture, demonstrating continuous learning and adaptation to evolving web technologies.
+                    </p>
+                </div>
             </div>
         </section>
 

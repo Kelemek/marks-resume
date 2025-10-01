@@ -8,19 +8,19 @@ function calculateITExperience() {
 // Update experience years on page load
 document.addEventListener('DOMContentLoaded', function() {
     const experienceYears = calculateITExperience();
-    
+
     // Update hero section
     const heroExperienceSpan = document.getElementById('hero-experience-years');
     if (heroExperienceSpan) {
         heroExperienceSpan.textContent = experienceYears + '+';
     }
-    
+
     // Update professional profile
     const experienceSpan = document.getElementById('experience-years');
     if (experienceSpan) {
         experienceSpan.textContent = experienceYears + '+';
     }
-    
+
     // Update Windows experience in skills section
     const windowsYears = document.getElementById('windows-years');
     if (windowsYears) {
@@ -28,67 +28,127 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// PDF Download Functionality
-document.getElementById('downloadPDF').addEventListener('click', function() {
-    // Show loading state
-    const button = this;
+// Generate ATS-friendly plain text document
+function generateATSFriendlyDoc() {
+    const button = document.getElementById('downloadPDF');
     const originalText = button.textContent;
-    button.textContent = 'Generating PDF...';
+    button.textContent = 'Generating Document...';
     button.disabled = true;
-    
-    // Hide the navbar for PDF generation
-    const navbar = document.querySelector('.navbar');
-    const originalNavDisplay = navbar.style.display;
-    navbar.style.display = 'none';
-    
-    // Temporarily adjust main content padding
-    const mainContent = document.querySelector('.main-content');
-    const originalPadding = mainContent.style.paddingTop;
-    mainContent.style.paddingTop = '0';
-    
-    // Configure PDF options
-    const opt = {
-        margin: 0.5,
-        filename: 'Mark_Dean_Larson_Resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-            scale: 2,
-            useCORS: true,
-            letterRendering: true
-        },
-        jsPDF: { 
-            unit: 'in', 
-            format: 'a4', 
-            orientation: 'portrait' 
-        }
-    };
-    
-    // Generate PDF
-    html2pdf().set(opt).from(document.body).save().then(() => {
-        // Restore original styles
-        navbar.style.display = originalNavDisplay;
-        mainContent.style.paddingTop = originalPadding;
+
+    try {
+        // Extract content from HTML in ATS-friendly format
+        const name = document.querySelector('.hero-title')?.textContent?.trim() || 'Mark Dean Larson';
+        const phone = document.querySelector('a[href^="tel:"]')?.textContent?.trim() || '';
+        const email = document.querySelector('a[href^="mailto:"]')?.textContent?.trim() || '';
+        const address = document.querySelector('a[href*="maps.apple.com"]')?.textContent?.trim() || '';
         
-        // Restore button state
+        // Get profile text and clean up whitespace
+        const profileElement = document.querySelector('.profile-text');
+        const profileText = profileElement ? 
+            profileElement.textContent
+                .replace(/\s+/g, ' ')  // Replace multiple spaces/newlines with single space
+                .trim()                // Remove leading/trailing whitespace
+            : '';
+        
+        // Build clean text document
+        let textContent = `
+=====================================
+           MARK LARSON
+=====================================
+
+${phone} | ${email}
+${address}
+
+`;
+        
+        textContent += `PROFESSIONAL SUMMARY\n`;
+        textContent += `${'-'.repeat(50)}\n`;
+        textContent += `${profileText}\n\n`;
+        
+        textContent += `PROFESSIONAL EXPERIENCE\n`;
+        textContent += `${'-'.repeat(50)}\n`;
+        
+        // Extract job experience
+        const jobCards = document.querySelectorAll('.job-card');
+        jobCards.forEach(card => {
+            const title = card.querySelector('.job-title')?.textContent?.trim() || '';
+            const company = card.querySelector('.job-company')?.textContent?.trim() || '';
+            const period = card.querySelector('.job-period')?.textContent?.trim() || '';
+            
+            textContent += `\n${title}\n`;
+            textContent += `${company} | ${period}\n`;
+            
+            // Get achievements and responsibilities
+            const achievements = card.querySelectorAll('.job-list li');
+            if (achievements.length > 0) {
+                textContent += '\n';
+                achievements.forEach(achievement => {
+                    const cleanText = achievement.textContent
+                        .replace(/\s+/g, ' ')  // Replace multiple spaces with single space
+                        .trim();                // Remove leading/trailing whitespace
+                    textContent += `• ${cleanText}\n`;
+                });
+            }
+            textContent += '\n';
+        });
+        
+        // Extract skills
+        textContent += `TECHNICAL SKILLS\n`;
+        textContent += `${'-'.repeat(50)}\n`;
+        
+        const skillSections = document.querySelectorAll('#skills h2.section-title');
+        skillSections.forEach(section => {
+            const sectionTitle = section.textContent?.replace(/\s+/g, ' ').trim();
+            if (sectionTitle && sectionTitle !== 'Technical Skills') {
+                textContent += `\n${sectionTitle}:\n`;
+                const skillsContainer = section.nextElementSibling;
+                if (skillsContainer) {
+                    const skillCards = skillsContainer.querySelectorAll('.skill-card h3');
+                    const skills = Array.from(skillCards).map(skill => 
+                        skill.textContent.replace(/\s+/g, ' ').trim()
+                    );
+                    textContent += skills.join(', ') + '\n';
+                }
+            }
+        });
+        
+        // Extract education
+        textContent += `\nEDUCATION & CERTIFICATIONS\n`;
+        textContent += `${'-'.repeat(50)}\n`;
+        
+        const eduCards = document.querySelectorAll('.education-card, .cert-card');
+        eduCards.forEach(card => {
+            const title = card.querySelector('h3')?.textContent?.replace(/\s+/g, ' ').trim() || '';
+            const details = card.querySelector('p')?.textContent?.replace(/\s+/g, ' ').trim() || '';
+            if (title) {
+                textContent += `\n${title}\n`;
+                if (details) {
+                    textContent += `${details}\n`;
+                }
+            }
+        });
+        
+        // Create plain text file that Word can open
+        const blob = new Blob([textContent], { 
+            type: 'text/plain;charset=utf-8' 
+        });
+        
+        saveAs(blob, 'Mark_Dean_Larson_Resume_ATS.txt');
+        
+        // Restore button
         button.textContent = originalText;
         button.disabled = false;
-    }).catch((error) => {
-        console.error('PDF generation failed:', error);
         
-        // Restore original styles even on error
-        navbar.style.display = originalNavDisplay;
-        mainContent.style.paddingTop = originalPadding;
-        
-        // Restore button state
+    } catch (error) {
+        console.error('Document generation failed:', error);
         button.textContent = 'Download Failed - Try Again';
         button.disabled = false;
-        
-        // Reset button text after a delay
-        setTimeout(() => {
-            button.textContent = originalText;
-        }, 3000);
-    });
-});
+        setTimeout(() => { button.textContent = originalText; }, 3000);
+    }
+}
+
+// Use ATS-friendly Word document generation
+document.getElementById('downloadPDF').addEventListener('click', generateATSFriendlyDoc);
 
 // Theme Toggle Functionality
 const themeToggle = document.getElementById('themeToggle');

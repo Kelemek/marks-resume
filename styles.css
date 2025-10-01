@@ -213,12 +213,21 @@ body {
 
 /* Profile Section */
 .profile-text {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: var(--text-muted);
-    text-align: center;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.profile-text p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.profile-text p:last-child {
+    margin-bottom: 0;
 }
 
 /* Skills Section */
@@ -873,5 +882,38 @@ body {
     
     .cert-text {
         font-size: 0.55rem;
+    }
+}
+
+/* Print and PDF specific styles */
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .job-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 1rem;
+    }
+    
+    .section {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+    
+    .skill-card, .education-card, .cert-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    .job-list {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    .navbar {
+        display: none !important;
     }
 }
