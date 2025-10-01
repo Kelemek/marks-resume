@@ -329,7 +329,7 @@ body {
     content: '■';
     position: absolute;
     left: 0;
-    color: var(--text-primary);
+    color: var(--text-muted);
     font-weight: bold;
     font-size: 0.8rem;
 }
