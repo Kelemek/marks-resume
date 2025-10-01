@@ -15,16 +15,92 @@
 
 [data-theme="light"] {
     /* Light theme */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f7fafc;
-    --bg-tertiary: #e2e8f0;
-    --bg-card: #ffffff;
+    --bg-primary: #f1f5f9;
+    --bg-secondary: #e2e8f0;
+    --bg-tertiary: #cbd5e0;
+    --bg-card: #f1f5f9;
     --text-primary: #1a202c;
     --text-secondary: #2d3748;
     --text-muted: #4a5568;
-    --border-color: #e2e8f0;
-    --nav-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #cbd5e0;
+    --nav-bg: rgba(241, 245, 249, 0.95);
     --shadow: rgba(0, 0, 0, 0.08);
+}
+
+/* Light mode specific card backgrounds */
+[data-theme="light"] .skill-card {
+    background: #f1f5f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .cert-card,
+[data-theme="light"] .education-card,
+[data-theme="light"] .training-section {
+    background: #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .job-card {
+    background: #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .skill-card:hover {
+    background: #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .cert-card:hover,
+[data-theme="light"] .education-card:hover,
+[data-theme="light"] .training-section:hover {
+    background: #cbd5e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .job-card:hover {
+    background: #cbd5e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .job-card:hover .job-header {
+    background: #f1f5f9;
+}
+
+/* Dark mode job header hover effect */
+[data-theme="dark"] .job-card:hover .job-header {
+    background: #374151;
+}
+
+/* Dark mode specific card backgrounds */
+[data-theme="dark"] .skill-card {
+    background: #2d3748;
+}
+
+[data-theme="dark"] .skill-card:hover {
+    background: #374151;
+}
+
+/* Dark mode specific button text colors on hover */
+[data-theme="dark"] .contact-link:hover,
+[data-theme="dark"] .contact-section .contact-link:hover {
+    color: #1a202c;
+}
+
+[data-theme="dark"] .cert-button:hover .cert-text {
+    color: #1a202c;
+}
+
+[data-theme="dark"] .cert-button:hover .cert-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a202c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpolyline points='14,2 14,8 20,8'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3Cpath d='M10 9H8'/%3E%3C/svg%3E");
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+[data-theme="dark"] .theme-toggle:hover .theme-text {
+    color: var(--text-primary);
 }
 
 /* Reset and base styles */
@@ -178,6 +254,7 @@ body {
 
 .contact-link:hover {
     background: var(--text-muted);
+    color: #ffffff;
     transform: translateY(-2px);
 }
 
@@ -289,6 +366,10 @@ body {
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
     gap: 1rem;
+    background: var(--bg-tertiary);
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid var(--text-muted);
 }
 
 .job-title {
@@ -367,6 +448,7 @@ body {
 .education-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px var(--shadow);
+    border-color: var(--text-muted);
 }
 
 .education-card-content {
@@ -415,11 +497,15 @@ body {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    transition: all 0.3s ease;
 }
 
 .cert-button:hover .cert-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z'/%3E%3Cpolyline points='14,2 14,8 20,8'/%3E%3Cpath d='M16 13H8'/%3E%3Cpath d='M16 17H8'/%3E%3Cpath d='M10 9H8'/%3E%3C/svg%3E");
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .cert-text {
@@ -431,7 +517,7 @@ body {
 }
 
 .cert-button:hover .cert-text {
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 .training-section {
@@ -446,6 +532,7 @@ body {
 .training-section:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px var(--shadow);
+    border-color: var(--text-muted);
 }
 
 .training-section h3 {
@@ -492,6 +579,7 @@ body {
 
 .contact-section .contact-link:hover {
     background: var(--text-muted);
+    color: #ffffff;
 }
 
 .contact-info {
@@ -836,6 +924,16 @@ body {
         height: 18px;
     }
     
+    .cert-button:hover .cert-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    [data-theme="dark"] .cert-button:hover .cert-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
     .cert-text {
         font-size: 0.6rem;
     }
@@ -876,6 +974,16 @@ body {
     }
     
     .cert-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .cert-button:hover .cert-icon {
+        width: 16px;
+        height: 16px;
+    }
+    
+    [data-theme="dark"] .cert-button:hover .cert-icon {
         width: 16px;
         height: 16px;
     }
