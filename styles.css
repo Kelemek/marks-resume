@@ -6,8 +6,8 @@
     --bg-tertiary: #2d3748;
     --bg-card: #1a202c;
     --text-primary: #ffffff;
-    --text-secondary: #d1d5db;
-    --text-muted: #a0aec0;
+    --text-secondary: #e2e8f0;
+    --text-muted: #cbd5e0;
     --border-color: #2d3748;
     --nav-bg: rgba(15, 20, 25, 0.95);
     --shadow: rgba(0, 0, 0, 0.1);
@@ -19,9 +19,9 @@
     --bg-secondary: #f7fafc;
     --bg-tertiary: #e2e8f0;
     --bg-card: #ffffff;
-    --text-primary: #2d3748;
-    --text-secondary: #4a5568;
-    --text-muted: #718096;
+    --text-primary: #1a202c;
+    --text-secondary: #2d3748;
+    --text-muted: #4a5568;
     --border-color: #e2e8f0;
     --nav-bg: rgba(255, 255, 255, 0.95);
     --shadow: rgba(0, 0, 0, 0.08);
