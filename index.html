@@ -294,52 +294,100 @@
                 <h2 class="section-title">Education & Certifications</h2>
                 <div class="education-grid">
                     <div class="education-card">
-                        <h3>Brown Institute for Advertising Design</h3>
-                        <p>School of Communication Arts for Computer Animation</p>
+                        <div class="education-card-content">
+                            <h3>Brown Institute for Advertising Design</h3>
+                            <p>School of Communication Arts for Computer Animation</p>
+                        </div>
                     </div>
                     <div class="education-card">
-                        <h3>Microsoft Certified Professional</h3>
-                        <p>NT Workstation, Server and Server Enterprise</p>
+                        <div class="education-card-content">
+                            <h3>Microsoft Certified Professional</h3>
+                            <p>NT Workstation, Server and Server Enterprise</p>
+                        </div>
                     </div>
                     <div class="education-card">
-                        <h3>AZ 900 Certificate</h3>
-                        <p>Microsoft Azure Fundamentals - 2024</p>
+                        <div class="education-card-content">
+                            <h3>AZ 900 Certificate</h3>
+                            <p>Microsoft Azure Fundamentals - 2024</p>
+                        </div>
                     </div>
                     <div class="education-card">
-                        <h3>PL 900 Certificate</h3>
-                        <p>Microsoft Power Platform Fundamentals - 2025</p>
+                        <div class="education-card-content">
+                            <h3>PL 900 Certificate</h3>
+                            <p>Microsoft Power Platform Fundamentals - 2025</p>
+                        </div>
                     </div>
                     <div class="education-card">
-                        <h3>HTML and CSS</h3>
-                        <p>Scrimba Certificate - 2025</p>
+                        <div class="education-card-content">
+                            <h3>HTML and CSS</h3>
+                            <p>Scrimba Certificate - 2025</p>
+                        </div>
+                        <button class="cert-button" data-cert="img/Learn HTML and CSS.pdf" aria-label="View HTML and CSS Certificate">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
                     </div>
                     <div class="education-card">
-                        <h3>Javascript</h3>
-                        <p>Scrimba Certificate - 2025</p>
+                        <div class="education-card-content">
+                            <h3>Javascript</h3>
+                            <p>Scrimba Certificate - 2025</p>
+                        </div>
+                        <button class="cert-button" data-cert="img/Learn Javascript.pdf" aria-label="View Javascript Certificate">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
                     </div>
                     <div class="education-card">
-                        <h3>React</h3>
-                        <p>Scrimba Certificate - 2025</p>
+                        <div class="education-card-content">
+                            <h3>React</h3>
+                            <p>Scrimba Certificate - 2025</p>
+                        </div>
+                        <button class="cert-button" data-cert="img/Learn React.pdf" aria-label="View React Certificate">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
                     </div>
                     <div class="education-card">
-                        <h3>Deploying with Netlify</h3>
-                        <p>Scrimba Certificate - 2025</p>
+                        <div class="education-card-content">
+                            <h3>Deploying with Netlify</h3>
+                            <p>Scrimba Certificate - 2025</p>
+                        </div>
+                        <button class="cert-button" data-cert="img/Deploying with Netlify.pdf" aria-label="View Netlify Certificate">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
                     </div>
                     <div class="education-card">
-                        <h3>Accesible Web Design</h3>
-                        <p>Scrimba Certificate - 2025</p>
+                        <div class="education-card-content">
+                            <h3>Accesible Web Design</h3>
+                            <p>Scrimba Certificate - 2025</p>
+                        </div>
+                        <button class="cert-button" data-cert="img/Learn Web Accessibility_ Free interactive course.pdf" aria-label="View Web Accessibility Certificate">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
                     </div>
                     <div class="education-card">
-                        <h3>UI Design Fundamentals</h3>
-                        <p>Scrimba Certificate - 2025</p>
+                        <div class="education-card-content">
+                            <h3>UI Design Fundamentals</h3>
+                            <p>Scrimba Certificate - 2025</p>
+                        </div>
+                        <button class="cert-button" data-cert="img/UI design fundamentals tutorial_ Learn to create beautiful and functional user interfaces in this free course.pdf" aria-label="View UI Design Certificate">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
                     </div>
                     <div class="education-card">
-                        <h3>Frontend Developer Path</h3>
-                        <p>Currently working towards - 2025</p>
+                        <div class="education-card-content">
+                            <h3>Frontend Developer Path</h3>
+                            <p>Currently working towards - 2025</p>
+                        </div>
                     </div>
                     <div class="education-card">
-                        <h3>Full Stack Developer Path</h3>
-                        <p>Currently working towards - 2025</p>
+                        <div class="education-card-content">
+                            <h3>Full Stack Developer Path</h3>
+                            <p>Currently working towards - 2025</p>
+                        </div>
                     </div>
                 </div>
                 <div class="training-section">
@@ -366,6 +414,16 @@
             </div>
         </section>
     </main>
+
+    <!-- Certificate Modal -->
+    <div id="certModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <iframe id="certViewer" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
 
     <script>
         document.getElementById('downloadPDF').addEventListener('click', function() {
@@ -477,6 +535,51 @@
                 const theme = e.matches ? 'dark' : 'light';
                 body.setAttribute('data-theme', theme);
                 updateThemeText(theme);
+            }
+        });
+
+        // Certificate Modal Functionality
+        const certModal = document.getElementById('certModal');
+        const certViewer = document.getElementById('certViewer');
+        const closeModal = document.querySelector('.close');
+        const certButtons = document.querySelectorAll('.cert-button');
+
+        // Add click event listeners to all certificate buttons
+        certButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const certPath = e.currentTarget.getAttribute('data-cert');
+                if (certPath) {
+                    // Add parameters to hide PDF viewer controls
+                    const cleanPdfUrl = `${certPath}#toolbar=0&navpanes=0&scrollbar=0`;
+                    certViewer.src = cleanPdfUrl;
+                    certModal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                }
+            });
+        });
+
+        // Close modal when clicking the X button
+        closeModal.addEventListener('click', () => {
+            certModal.style.display = 'none';
+            certViewer.src = ''; // Clear the iframe
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+
+        // Close modal when clicking outside the modal content
+        window.addEventListener('click', (e) => {
+            if (e.target === certModal) {
+                certModal.style.display = 'none';
+                certViewer.src = ''; // Clear the iframe
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && certModal.style.display === 'block') {
+                certModal.style.display = 'none';
+                certViewer.src = ''; // Clear the iframe
+                document.body.style.overflow = 'auto'; // Restore scrolling
             }
         });
     </script>
