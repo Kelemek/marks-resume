@@ -9,7 +9,7 @@
     --text-secondary: #e2e8f0;
     --text-muted: #cbd5e0;
     --border-color: #2d3748;
-    --nav-bg: rgba(15, 20, 25, 0.95);
+    --nav-bg: rgba(0, 0, 0, 0);
     --shadow: rgba(0, 0, 0, 0.1);
 }
 
@@ -23,7 +23,7 @@
     --text-secondary: #2d3748;
     --text-muted: #4a5568;
     --border-color: #cbd5e0;
-    --nav-bg: rgba(241, 245, 249, 0.95);
+    --nav-bg: rgba(0, 0, 0, 0);
     --shadow: rgba(0, 0, 0, 0.08);
 }
 
