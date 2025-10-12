@@ -26,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (windowsYears) {
         windowsYears.textContent = experienceYears + ' years';
     }
+
+    // Render dynamic content
+    renderSkills();
+    renderEducation();
 });
 
 // Generate ATS-friendly plain text document
@@ -205,21 +209,17 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 const certModal = document.getElementById('certModal');
 const certViewer = document.getElementById('certViewer');
 const closeModal = document.querySelector('.close');
-const certButtons = document.querySelectorAll('.cert-button');
 
-// Add click event listeners to all certificate buttons
-certButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        const certPath = e.currentTarget.getAttribute('data-cert');
-        if (certPath) {
-            // Add parameters to hide PDF viewer controls
-            const cleanPdfUrl = `${certPath}#toolbar=0&navpanes=0&scrollbar=0`;
-            certViewer.src = cleanPdfUrl;
-            certModal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        }
-    });
-});
+// Function to show certificate modal
+function showCertificate(pdfPath) {
+    if (pdfPath && certModal && certViewer) {
+        // Add parameters to hide PDF viewer controls
+        const cleanPdfUrl = `${pdfPath}#toolbar=0&navpanes=0&scrollbar=0`;
+        certViewer.src = cleanPdfUrl;
+        certModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+}
 
 // Close modal when clicking the X button
 closeModal.addEventListener('click', () => {
@@ -245,3 +245,107 @@ document.addEventListener('keydown', (e) => {
         document.body.style.overflow = 'auto'; // Restore scrolling
     }
 });
+
+// Dynamic content rendering functions
+function renderSkills() {
+    const systemsGrid = document.getElementById('systems-software-grid');
+    const developmentGrid = document.getElementById('development-software-grid');
+    
+    if (systemsGrid && resumeData.systemsSoftware) {
+        systemsGrid.innerHTML = '';
+        resumeData.systemsSoftware.forEach(skill => {
+            const skillCard = document.createElement('div');
+            skillCard.className = 'skill-card';
+            skillCard.innerHTML = `
+                <div class="skill-card-content">
+                    <h4 ${skill.id ? `id="${skill.id}"` : ''}>${skill.name}</h4>
+                    <p>${skill.years}</p>
+                </div>
+            `;
+            systemsGrid.appendChild(skillCard);
+        });
+    }
+    
+    if (developmentGrid && resumeData.developmentSoftware) {
+        developmentGrid.innerHTML = '';
+        resumeData.developmentSoftware.forEach(skill => {
+            const skillCard = document.createElement('div');
+            skillCard.className = 'skill-card';
+            skillCard.innerHTML = `
+                <div class="skill-card-content">
+                    <h4>${skill.name}</h4>
+                    <p>${skill.years}</p>
+                </div>
+            `;
+            developmentGrid.appendChild(skillCard);
+        });
+    }
+}
+
+function renderEducation() {
+    const educationGrid = document.getElementById('education-grid');
+    
+    if (educationGrid) {
+        educationGrid.innerHTML = '';
+        
+        // Render basic education items
+        if (resumeData.education) {
+            resumeData.education.forEach(item => {
+                const educationCard = document.createElement('div');
+                educationCard.className = 'education-card';
+                educationCard.innerHTML = `
+                    <div class="education-card-content">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+                educationGrid.appendChild(educationCard);
+            });
+        }
+        
+        // Render certificates
+        if (resumeData.certificates) {
+            resumeData.certificates.forEach(cert => {
+                const certCard = document.createElement('div');
+                certCard.className = 'education-card';
+                
+                let cardContent = `
+                    <div class="education-card-content">
+                        <h3>${cert.title}</h3>
+                        <p>${cert.institution}</p>
+                    </div>
+                `;
+                
+                // Add certificate button if PDF is available
+                if (cert.pdfPath) {
+                    cardContent += `
+                        <button class="cert-button" data-cert="${cert.pdfPath}" aria-label="${cert.ariaLabel || 'View ' + cert.title}">
+                            <div class="cert-icon"></div>
+                            <span class="cert-text">View</span>
+                        </button>
+                    `;
+                }
+                
+                certCard.innerHTML = cardContent;
+                educationGrid.appendChild(certCard);
+            });
+            
+            // Re-attach event listeners for certificate buttons
+            attachCertificateEventListeners();
+        }
+    }
+}
+
+function attachCertificateEventListeners() {
+    const certButtons = document.querySelectorAll('.cert-button');
+    certButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pdfUrl = button.getAttribute('data-cert');
+            if (pdfUrl) {
+                showCertificate(pdfUrl);
+            }
+        });
+    });
+}
+
