@@ -96,41 +96,38 @@ ${address}
             textContent += '\n';
         });
         
-        // Extract skills
+        // Extract skills from data (since they're now dynamically rendered)
         textContent += `TECHNICAL SKILLS\n`;
         textContent += `${'-'.repeat(50)}\n`;
         
-        const skillSections = document.querySelectorAll('#skills h2.section-title');
-        skillSections.forEach(section => {
-            const sectionTitle = section.textContent?.replace(/\s+/g, ' ').trim();
-            if (sectionTitle && sectionTitle !== 'Technical Skills') {
-                textContent += `\n${sectionTitle}:\n`;
-                const skillsContainer = section.nextElementSibling;
-                if (skillsContainer) {
-                    const skillCards = skillsContainer.querySelectorAll('.skill-card h3');
-                    const skills = Array.from(skillCards).map(skill => 
-                        skill.textContent.replace(/\s+/g, ' ').trim()
-                    );
-                    textContent += skills.join(', ') + '\n';
-                }
-            }
-        });
+        // Extract Systems & Software skills
+        if (resumeData.systemsSoftware && resumeData.systemsSoftware.length > 0) {
+            textContent += `\nSystems & Software:\n`;
+            resumeData.systemsSoftware.forEach(skill => {
+                textContent += `• ${skill.name} - ${skill.years}\n`;
+            });
+        }
         
-        // Extract education
+        // Extract Development & Software skills  
+        if (resumeData.developmentSoftware && resumeData.developmentSoftware.length > 0) {
+            textContent += `\nDevelopment & Software:\n`;
+            resumeData.developmentSoftware.forEach(skill => {
+                textContent += `• ${skill.name} - ${skill.years}\n`;
+            });
+        }
+        
+        // Extract education and certifications from data (since they're now dynamically rendered)
         textContent += `\nEDUCATION & CERTIFICATIONS\n`;
         textContent += `${'-'.repeat(50)}\n`;
         
-        const eduCards = document.querySelectorAll('.education-card, .cert-card');
-        eduCards.forEach(card => {
-            const title = card.querySelector('h3')?.textContent?.replace(/\s+/g, ' ').trim() || '';
-            const details = card.querySelector('p')?.textContent?.replace(/\s+/g, ' ').trim() || '';
-            if (title) {
-                textContent += `\n${title}\n`;
-                if (details) {
-                    textContent += `${details}\n`;
+        if (resumeData.certificates && resumeData.certificates.length > 0) {
+            resumeData.certificates.forEach(cert => {
+                textContent += `\n${cert.title}\n`;
+                if (cert.institution) {
+                    textContent += `${cert.institution}\n`;
                 }
-            }
-        });
+            });
+        }
         
         // Create plain text file that Word can open
         const blob = new Blob([textContent], { 
