@@ -122,10 +122,7 @@ ${address}
         
         if (resumeData.certificates && resumeData.certificates.length > 0) {
             resumeData.certificates.forEach(cert => {
-                textContent += `\n${cert.title}\n`;
-                if (cert.institution) {
-                    textContent += `${cert.institution}\n`;
-                }
+                textContent += `• ${cert.title} - ${cert.institution}\n`;
             });
         }
         
