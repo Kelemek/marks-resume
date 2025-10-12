@@ -101,6 +101,12 @@ const resumeData = {
             ariaLabel: "View Node.js Certificate"
         },
         {
+            title: "Learn Express.js",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Express.js.pdf",
+            ariaLabel: "View Express.js Certificate"
+        },
+        {
             title: "Intro to AI Engineering",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Intro to AI Engineering.pdf",
