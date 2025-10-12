@@ -30,6 +30,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Render dynamic content
     renderSkills();
     renderEducation();
+    
+    // Mobile hamburger menu functionality
+    const hamburgerMenu = document.getElementById('hamburgerMenu');
+    const navLinks = document.getElementById('navLinks');
+    
+    if (hamburgerMenu && navLinks) {
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a nav link
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                hamburgerMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburgerMenu.contains(e.target) && !navLinks.contains(e.target)) {
+                hamburgerMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
 });
 
 // Generate ATS-friendly plain text document
@@ -153,20 +180,19 @@ const themeToggle = document.getElementById('themeToggle');
 const themeText = document.querySelector('.theme-text');
 const body = document.body;
 
-// Check for saved theme preference or default to dark theme
+// Check for saved theme preference or default to system preference
 const savedTheme = localStorage.getItem('theme');
 const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 if (savedTheme) {
+    // Use saved preference
     body.setAttribute('data-theme', savedTheme);
     updateThemeText(savedTheme);
-} else if (!prefersDarkScheme) {
-    // If user prefers light mode and no saved preference, switch to light
-    body.setAttribute('data-theme', 'light');
-    updateThemeText('light');
 } else {
-    // Default dark theme case - update the text to show correct option
-    updateThemeText('dark');
+    // Default to system preference
+    const systemTheme = prefersDarkScheme ? 'dark' : 'light';
+    body.setAttribute('data-theme', systemTheme);
+    updateThemeText(systemTheme);
 }
 
 // Theme toggle event listener
