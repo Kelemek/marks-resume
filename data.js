@@ -1,12 +1,5 @@
 // Resume data for dynamic rendering
 const resumeData = {
-    // Education data
-    education: [
-        { title: 'Brown Institute', description: 'Advertising Design - 1995', type: 'education' },
-        { title: 'School of Communication Arts', description: 'Computer Animation - 1995', type: 'education' },
-        { title: 'Microsoft Certified Professional', description: 'Workstation, Server Enterprise - 1999', type: 'education' }
-    ],
-
     // Skills data
     systemsSoftware: [
         { name: "Windows NT 3.5 - 2025", years: "29 years", id: "windows-years" },
@@ -40,6 +33,24 @@ const resumeData = {
     
     // Certificates data
     certificates: [
+        {
+            title: "Brown Institute",
+            institution: "Advertising Design - 1995",
+            pdfPath: null,
+            ariaLabel: null
+        },
+        {
+            title: "School of Communication Arts",
+            institution: "Computer Animation - 1995",
+            pdfPath: null,
+            ariaLabel: null
+        },
+        {
+            title: "Microsoft Certified Professional",
+            institution: "Workstation, Server Enterprise - 1999",
+            pdfPath: null,
+            ariaLabel: null
+        },
         {
             title: "AZ 900 Certificate",
             institution: "Azure Fundamentals - 2024",

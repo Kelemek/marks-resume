@@ -288,22 +288,7 @@ function renderEducation() {
     if (educationGrid) {
         educationGrid.innerHTML = '';
         
-        // Render basic education items
-        if (resumeData.education) {
-            resumeData.education.forEach(item => {
-                const educationCard = document.createElement('div');
-                educationCard.className = 'education-card';
-                educationCard.innerHTML = `
-                    <div class="education-card-content">
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                    </div>
-                `;
-                educationGrid.appendChild(educationCard);
-            });
-        }
-        
-        // Render certificates
+        // Render all certificates (including education items that are now in certificates array)
         if (resumeData.certificates) {
             resumeData.certificates.forEach(cert => {
                 const certCard = document.createElement('div');
