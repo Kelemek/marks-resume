@@ -122,7 +122,7 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Learn Next.js.pdf",
             ariaLabel: "View Learn Next.js"
-        }
+        },
         {
             title: "Intro to AI Engineering",
             institution: "Scrimba Certificate - 2025",
