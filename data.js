@@ -118,6 +118,12 @@ const resumeData = {
             ariaLabel: "View Express.js Certificate"
         },
         {
+            title: "Learn Next.js",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Next.js.pdf",
+            ariaLabel: "View Learn Next.js"
+        }
+        {
             title: "Intro to AI Engineering",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Intro to AI Engineering.pdf",
@@ -161,9 +167,9 @@ const resumeData = {
         },
         {
             title: "Full Stack Developer Path",
-            institution: "Currently working towards - 2025",
-            pdfPath: null,
-            ariaLabel: null
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/The Fullstack Developer Path.pdf",
+            ariaLabel: "View Full Stack Developer Path"
         }
     ]
 };
