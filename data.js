@@ -76,6 +76,12 @@ const resumeData = {
             ariaLabel: "View HTML and CSS Certificate"
         },
         {
+            title: "Learn Tailwind CSS",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Tailwind CSS.pdf",
+            ariaLabel: "View Learn Tailwind CSS Certificate"
+        },
+        {
             title: "Javascript",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Learn Javascript.pdf",
