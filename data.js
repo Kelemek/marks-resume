@@ -94,6 +94,12 @@ const resumeData = {
             ariaLabel: "View React Certificate"
         },
         {
+            title: "Learn Typescript",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Typescript.pdf",
+            ariaLabel: "View Learn Typescript Certificate"
+        },
+        {
             title: "Intro to Supabase",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Intro to Supabase.pdf",
@@ -124,6 +130,12 @@ const resumeData = {
             ariaLabel: "View Learn Next.js"
         },
         {
+            title: "Intro to Model Context Protocol (MCP)",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Intro to Model Context Protocol (MCP).pdf",
+            ariaLabel: "View Intro to Model Context Protocol (MCP)"
+        },
+        {
             title: "Intro to AI Engineering",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Intro to AI Engineering.pdf",
@@ -140,6 +152,12 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Learn AI Agents.pdf",
             ariaLabel: "View Learn AI Agents Certificate"
+        },
+        {
+            title: "Intro to Vite",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Intro to Vite.pdf",
+            ariaLabel: "View Intro to Vite Certificate"
         },
         {
             title: "Deploying with Netlify",
