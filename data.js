@@ -22,8 +22,11 @@ const resumeData = {
         { name: "ASP.net", years: "4 years" },
         { name: "VB.net", years: "4 years" },
         { name: "React", years: "1 year" },
+        { name: "Next.JS", years: "1 year" },
+        { name: "Supabase", years: "1 year" },
         { name: "CSS", years: "1 year" },
         { name: "JavaScript", years: "2 years" },
+        { name: "TypeScript", years: "2 years" },
         { name: "Transact SQL", years: "2 years" },
         { name: "HTML", years: "2 years" },
         { name: "Powershell", years: "3 years" },
@@ -70,6 +73,12 @@ const resumeData = {
             ariaLabel: "View Biblical Counseling Certificate"
         },
         {
+            title: "Javascript",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Javascript.pdf",
+            ariaLabel: "View Javascript Certificate"
+        },
+        {
             title: "HTML and CSS",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Learn HTML and CSS.pdf",
@@ -80,12 +89,6 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Learn Tailwind CSS.pdf",
             ariaLabel: "View Learn Tailwind CSS Certificate"
-        },
-        {
-            title: "Javascript",
-            institution: "Scrimba Certificate - 2025",
-            pdfPath: "img/Learn Javascript.pdf",
-            ariaLabel: "View Javascript Certificate"
         },
         {
             title: "Learn CSS Variables",
