@@ -197,6 +197,12 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/The Fullstack Developer Path.pdf",
             ariaLabel: "View Full Stack Developer Path"
+        },
+        {
+            title: "The AI Engeneer Path",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/The AI Engineer Path_ Learn to Build generative AI-powered apps and advance your web development skills.pdf",
+            ariaLabel: "View The AI Engeneer Path"
         }
     ]
 };
