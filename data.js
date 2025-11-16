@@ -203,6 +203,12 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/The AI Engineer Path_ Learn to Build generative AI-powered apps and advance your web development skills.pdf",
             ariaLabel: "View The AI Engeneer Path"
+        },
+        {
+            title: "Prompt Engineering for Web dev",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Prompt Engineering for Web dev.pdf",
+            ariaLabel: "View Prompt Engineering for Web dev"
         }
     ]
 };
