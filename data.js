@@ -209,6 +209,12 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Prompt Engineering for Web dev.pdf",
             ariaLabel: "View Prompt Engineering for Web dev"
+        },
+        {
+            title: "Learn Vue.js",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Vue.pdf",
+            ariaLabel: "View Learn Vue.js"
         }
     ]
 };
