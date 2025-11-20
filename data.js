@@ -215,6 +215,18 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Learn Vue.pdf",
             ariaLabel: "View Learn Vue.js"
+        },
+        {
+            title: "Learn Bootstrap",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Learn Bootstrap 4 in this hands-on course.pdf",
+            ariaLabel: "View Learn Bootstrap"
+        },
+        {
+            title: "Learn Advanced React",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Tutorial_ Learn Advanced React – A 13-hour interactive course lead by Bob Ziroll.pdf",
+            ariaLabel: "View Learn Advanced React"
         }
     ]
 };
