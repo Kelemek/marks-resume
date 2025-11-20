@@ -994,6 +994,28 @@ body {
         background: white;
         border: 1px solid #ccc;
     }
+    
+    .stacked-card {
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+    
+    .stacked-card-header {
+        display: none;
+    }
+    
+    .stacked-card-content {
+        max-height: none !important;
+        overflow: visible !important;
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+        gap: 1rem;
+    }
+    
+    .scrimba-cert-card {
+        page-break-inside: avoid;
+    }
 }
 
 /* Modal Styles */
@@ -1203,6 +1225,34 @@ body {
     }
     
     .skill-card, .education-card, .cert-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    .stacked-card-container {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        display: block !important;
+    }
+    
+    .stacked-card {
+        overflow: visible !important;
+    }
+    
+    .stacked-card-header {
+        display: none !important;
+    }
+    
+    .stacked-card-content {
+        max-height: none !important;
+        overflow: visible !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem !important;
+        padding: 0 !important;
+    }
+    
+    .scrimba-cert-card {
         page-break-inside: avoid;
         break-inside: avoid;
     }

@@ -153,6 +153,14 @@ ${address}
             });
         }
         
+        // Add Scrimba certificates
+        if (resumeData.scrimbaCertificates && resumeData.scrimbaCertificates.length > 0) {
+            textContent += `\nScrimba Certificates:\n`;
+            resumeData.scrimbaCertificates.forEach(cert => {
+                textContent += `• ${cert.title} - ${cert.institution}\n`;
+            });
+        }
+        
         // Create plain text file that Word can open
         const blob = new Blob([textContent], { 
             type: 'text/plain;charset=utf-8' 
