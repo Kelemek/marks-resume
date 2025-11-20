@@ -308,7 +308,7 @@ function renderEducation() {
     if (educationGrid) {
         educationGrid.innerHTML = '';
         
-        // Render all certificates (including education items that are now in certificates array)
+        // Render regular certificates
         if (resumeData.certificates) {
             resumeData.certificates.forEach(cert => {
                 const certCard = document.createElement('div');
@@ -334,10 +334,57 @@ function renderEducation() {
                 certCard.innerHTML = cardContent;
                 educationGrid.appendChild(certCard);
             });
-            
-            // Re-attach event listeners for certificate buttons
-            attachCertificateEventListeners();
         }
+        
+        // Render Scrimba certificates as stacked card
+        if (resumeData.scrimbaCertificates && resumeData.scrimbaCertificates.length > 0) {
+            const stackedCard = document.createElement('div');
+            stackedCard.className = 'stacked-card-container';
+            stackedCard.innerHTML = `
+                <div class="stacked-card" id="scrimbaStack">
+                    <div class="stacked-card-header">
+                        <h3>Scrimba Certificates (${resumeData.scrimbaCertificates.length})</h3>
+                        <button class="stack-toggle" aria-label="Toggle Scrimba certificates">
+                            <span class="stack-toggle-icon">▼</span>
+                        </button>
+                    </div>
+                    <div class="stacked-card-content">
+                        ${resumeData.scrimbaCertificates.map(cert => `
+                            <div class="education-card scrimba-cert-card">
+                                <div class="education-card-content">
+                                    <h3>${cert.title}</h3>
+                                    <p>${cert.institution}</p>
+                                </div>
+                                ${cert.pdfPath ? `
+                                    <button class="cert-button" data-cert="${cert.pdfPath}" aria-label="${cert.ariaLabel || 'View ' + cert.title}">
+                                        <div class="cert-icon"></div>
+                                        <span class="cert-text">View</span>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            educationGrid.appendChild(stackedCard);
+            
+            // Add toggle functionality
+            const stackHeader = stackedCard.querySelector('.stacked-card-header');
+            const stackToggle = stackedCard.querySelector('.stack-toggle');
+            const stackContent = stackedCard.querySelector('.stacked-card-content');
+            const stackIcon = stackedCard.querySelector('.stack-toggle-icon');
+            
+            const toggleStack = () => {
+                stackedCard.querySelector('.stacked-card').classList.toggle('expanded');
+                stackIcon.textContent = stackedCard.querySelector('.stacked-card').classList.contains('expanded') ? '▲' : '▼';
+            };
+            
+            stackHeader.addEventListener('click', toggleStack);
+            stackHeader.style.cursor = 'pointer';
+        }
+        
+        // Re-attach event listeners for certificate buttons
+        attachCertificateEventListeners();
     }
 }
 

@@ -71,7 +71,11 @@ const resumeData = {
             institution: "ACBC Certificate - 2024",
             pdfPath: "img/ACBC Certificate.pdf",
             ariaLabel: "View Biblical Counseling Certificate"
-        },
+        }
+    ],
+    
+    // Scrimba Certificates
+    scrimbaCertificates: [
         {
             title: "Javascript",
             institution: "Scrimba Certificate - 2025",
