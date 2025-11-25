@@ -191,24 +191,6 @@ const resumeData = {
             ariaLabel: "View UI Design Certificate"
         },
         {
-            title: "Frontend Developer Path",
-            institution: "Scrimba Certificate - 2025",
-            pdfPath: "img/The Front-End Developer Career Path_ Learn the skills you'll need to launch your career in web development.pdf",
-            ariaLabel: "View Front-End Developer Certificate"
-        },
-        {
-            title: "Full Stack Developer Path",
-            institution: "Scrimba Certificate - 2025",
-            pdfPath: "img/The Fullstack Developer Path.pdf",
-            ariaLabel: "View Full Stack Developer Path"
-        },
-        {
-            title: "The AI Engeneer Path",
-            institution: "Scrimba Certificate - 2025",
-            pdfPath: "img/The AI Engineer Path_ Learn to Build generative AI-powered apps and advance your web development skills.pdf",
-            ariaLabel: "View The AI Engeneer Path"
-        },
-        {
             title: "Prompt Engineering for Web dev",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Prompt Engineering for Web dev.pdf",
@@ -231,6 +213,48 @@ const resumeData = {
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Tutorial_ Learn Advanced React – A 13-hour interactive course lead by Bob Ziroll.pdf",
             ariaLabel: "View Learn Advanced React"
+        },
+        {
+            title: "Unit Testing Tutorial",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Unit Testing Tutorial.pdf",
+            ariaLabel: "View Unit Testing Tutorial"
+        },
+        {
+            title: "Intro to Astro",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Intro to Astro.pdf",
+            ariaLabel: "View Intro to Astro"
+        },
+        {
+            title: "Clean Code Tutorial",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Clean Code Tutorial.pdf",
+            ariaLabel: "View Clean Code Tutorial"
+        },
+        {
+            title: "Frontend Developer Path",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/The Front-End Developer Career Path_ Learn the skills you'll need to launch your career in web development.pdf",
+            ariaLabel: "View Front-End Developer Certificate"
+        },
+        {
+            title: "Full Stack Developer Path",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/The Fullstack Developer Path.pdf",
+            ariaLabel: "View Full Stack Developer Path"
+        },
+        {
+            title: "The AI Engeneer Path",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/The AI Engineer Path_ Learn to Build generative AI-powered apps and advance your web development skills.pdf",
+            ariaLabel: "View The AI Engeneer Path"
+        },
+        {
+            title: "The Backend Developter Path",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/The Backend Developer Path.pdf",
+            ariaLabel: "View The Backend Developer Path"
         }
-    ]
+  ]
 };
