@@ -227,6 +227,18 @@ const resumeData = {
             ariaLabel: "View Intro to Astro"
         },
         {
+            title: "Svelte JS Tutorial",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/Svelte JS Tutorial.pdf",
+            ariaLabel: "View Svelte JS Tutorial"
+        },
+        {
+            title: "ChatGPT Tutorial for Programming",
+            institution: "Scrimba Certificate - 2025",
+            pdfPath: "img/ChatGPT Tutorial for Programming.pdf",
+            ariaLabel: "View ChatGPT Tutorial for Programming"
+        },
+        {
             title: "Clean Code Tutorial",
             institution: "Scrimba Certificate - 2025",
             pdfPath: "img/Clean Code Tutorial.pdf",
