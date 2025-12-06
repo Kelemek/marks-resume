@@ -1,5 +1,31 @@
 import { saveAs } from 'file-saver';
-import { resumeData, calculateITExperience } from '../data/resumeData';
+
+// Resume data is injected into window by the Astro component at build time
+interface ResumeData {
+  systemsSoftware: { name: string; years: string }[];
+  developmentSoftware: { name: string; years: string }[];
+  certificates: { title: string; institution: string }[];
+  scrimbaCertificates: { title: string; institution: string }[];
+  jobs: {
+    title: string;
+    company: string;
+    location: string;
+    period: string;
+    achievements?: string[];
+    responsibilities?: string[];
+  }[];
+  itStartYear: number;
+}
+
+declare global {
+  interface Window {
+    resumeData?: ResumeData;
+  }
+}
+
+function calculateITExperience(startYear: number): number {
+  return new Date().getFullYear() - startYear;
+}
 
 // Generate ATS-friendly plain text document
 export function initDownload() {
@@ -13,12 +39,18 @@ function generateATSFriendlyDoc() {
   const button = document.getElementById('downloadPDF') as HTMLButtonElement | null;
   if (!button) return;
 
+  const resumeData = window.resumeData;
+  if (!resumeData) {
+    console.error('Resume data not available');
+    return;
+  }
+
   const originalText = button.textContent || '';
   button.textContent = 'Generating Document...';
   button.disabled = true;
 
   try {
-    const experienceYears = calculateITExperience();
+    const experienceYears = calculateITExperience(resumeData.itStartYear);
     
     // Build clean text document
     let textContent = `

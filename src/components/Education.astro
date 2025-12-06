@@ -1,7 +1,7 @@
 ---
-import { resumeData } from '../data/resumeData';
-import type { Certificate } from '../data/resumeData';
+import { getResumeData } from '../lib/resumeData';
 
+const resumeData = await getResumeData();
 const { certificates, scrimbaCertificates } = resumeData;
 ---
 
@@ -10,7 +10,7 @@ const { certificates, scrimbaCertificates } = resumeData;
     <h2 class="text-2xl md:text-3xl font-bold text-(--color-text-primary) mb-8 pb-4 border-b border-(--color-border) relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-(--color-accent)">Education & Certifications</h2>
     <div id="education-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {/* Regular certificates */}
-      {certificates.map((cert: Certificate) => (
+      {certificates.map((cert) => (
         <div class="bg-(--color-bg-secondary) rounded-lg p-5 border border-(--color-border) flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
           <div class="flex-1 min-w-0">
             <h3 class="text-base font-semibold text-(--color-text-primary) mb-1">{cert.title}</h3>
@@ -41,7 +41,7 @@ const { certificates, scrimbaCertificates } = resumeData;
           <div class="stacked-card-content grid grid-rows-[0fr] transition-all duration-500 ease-in-out opacity-0">
             <div class="overflow-hidden">
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
-              {scrimbaCertificates.map((cert: Certificate) => (
+              {scrimbaCertificates.map((cert) => (
                 <div class="scrimba-cert-card bg-(--color-bg-tertiary) rounded-lg p-5 border border-(--color-border) flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
                   <div class="flex-1 min-w-0">
                     <h3 class="text-base font-semibold text-(--color-text-primary) mb-1">{cert.title}</h3>

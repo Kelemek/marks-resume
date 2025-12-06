@@ -1,7 +1,11 @@
 ---
-import { calculateITExperience } from '../data/resumeData';
+import { getResumeData, calculateITExperience } from '../lib/resumeData';
 
-const experienceYears = calculateITExperience();
+const resumeData = await getResumeData();
+const experienceYears = calculateITExperience(resumeData.itStartYear);
+
+// Serialize data for client-side download script
+const clientData = JSON.stringify(resumeData);
 ---
 
 <section id="top" class="py-16 md:py-24 text-center bg-(--color-bg-primary)">
@@ -16,3 +20,8 @@ const experienceYears = calculateITExperience();
     </div>
   </div>
 </section>
+
+<script define:vars={{ clientData }}>
+  // Inject resume data for client-side download script
+  window.resumeData = JSON.parse(clientData);
+</script>

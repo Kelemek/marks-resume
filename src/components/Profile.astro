@@ -1,7 +1,8 @@
 ---
-import { calculateITExperience } from '../data/resumeData';
+import { getResumeData, calculateITExperience } from '../lib/resumeData';
 
-const experienceYears = calculateITExperience();
+const resumeData = await getResumeData();
+const experienceYears = calculateITExperience(resumeData.itStartYear);
 ---
 
 <section id="profile" class="py-12 md:py-20 bg-(--color-bg-secondary)">

@@ -1,7 +1,7 @@
 ---
-import { resumeData } from '../data/resumeData';
-import type { Skill } from '../data/resumeData';
+import { getResumeData } from '../lib/resumeData';
 
+const resumeData = await getResumeData();
 const { systemsSoftware, developmentSoftware } = resumeData;
 ---
 
@@ -9,10 +9,10 @@ const { systemsSoftware, developmentSoftware } = resumeData;
   <div class="max-w-6xl mx-auto px-4 md:px-8">
     <h2 class="text-2xl md:text-3xl font-bold text-(--color-text-primary) mb-8 pb-4 border-b border-(--color-border) relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-(--color-accent)">Systems Software</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-12" id="systems-software-grid">
-      {systemsSoftware.map((skill: Skill) => (
+      {systemsSoftware.map((skill) => (
         <div class="bg-(--color-bg-tertiary) rounded-lg p-4 text-center border border-(--color-border) transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
           <div>
-            <h4 id={skill.id} class="text-sm font-semibold text-(--color-text-primary) mb-1">{skill.name}</h4>
+            <h4 class="text-sm font-semibold text-(--color-text-primary) mb-1">{skill.name}</h4>
             <p class="text-xs text-(--color-text-muted)">{skill.years}</p>
           </div>
         </div>
@@ -21,7 +21,7 @@ const { systemsSoftware, developmentSoftware } = resumeData;
 
     <h2 class="text-2xl md:text-3xl font-bold text-(--color-text-primary) mb-8 pb-4 border-b border-(--color-border) relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-(--color-accent)">Development Software</h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="development-software-grid">
-      {developmentSoftware.map((skill: Skill) => (
+      {developmentSoftware.map((skill) => (
         <div class="bg-(--color-bg-tertiary) rounded-lg p-4 text-center border border-(--color-border) transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
           <div>
             <h4 class="text-sm font-semibold text-(--color-text-primary) mb-1">{skill.name}</h4>
