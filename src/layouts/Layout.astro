@@ -79,11 +79,9 @@ const {
     import { initCertModal } from '../scripts/certModal';
     import { initDownload } from '../scripts/download';
     import { inject } from '@vercel/analytics';
-    import { injectSpeedInsights } from '@vercel/speed-insights';
 
-    // Initialize Vercel Analytics and Speed Insights
+    // Initialize Vercel Analytics
     inject();
-    injectSpeedInsights();
 
     // Initialize all client-side functionality
     document.addEventListener('DOMContentLoaded', () => {
