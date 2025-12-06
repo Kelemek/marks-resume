@@ -6,10 +6,30 @@ export function initCertModal() {
 
   if (!certModal || !certViewer || !closeModal) return;
 
-  // Function to show certificate modal
+  // Function to show certificate modal. Supports PDFs and image types.
   function showCertificate(pdfPath: string) {
-    if (pdfPath && certModal && certViewer) {
+    if (!pdfPath || !certModal) return;
+
+    const certImage = document.getElementById('certImage') as HTMLImageElement | null;
+
+    const isImage = /\.(jpe?g|png|webp|gif|svg)$/i.test(pdfPath);
+
+    if (isImage && certImage && certViewer) {
+      // Show image element and hide iframe
+      certViewer.style.display = 'none';
+      certViewer.src = '';
+      certImage.src = pdfPath;
+      certImage.style.display = 'block';
+      certModal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+
+    // Default to PDF (or other embeddable content) in iframe
+    if (certViewer) {
       const cleanPdfUrl = `${pdfPath}#toolbar=0&navpanes=0&scrollbar=0`;
+      certImage && (certImage.style.display = 'none');
+      certViewer.style.display = 'block';
       certViewer.src = cleanPdfUrl;
       certModal.style.display = 'block';
       document.body.style.overflow = 'hidden';
@@ -19,7 +39,9 @@ export function initCertModal() {
   // Close modal when clicking the X button
   closeModal.addEventListener('click', () => {
     certModal.style.display = 'none';
-    certViewer.src = '';
+    certViewer && (certViewer.src = '');
+    const certImage = document.getElementById('certImage') as HTMLImageElement | null;
+    certImage && (certImage.src = '', certImage.style.display = 'none');
     document.body.style.overflow = 'auto';
   });
 
@@ -27,7 +49,9 @@ export function initCertModal() {
   window.addEventListener('click', (e) => {
     if (e.target === certModal) {
       certModal.style.display = 'none';
-      certViewer.src = '';
+      certViewer && (certViewer.src = '');
+      const certImage = document.getElementById('certImage') as HTMLImageElement | null;
+      certImage && (certImage.src = '', certImage.style.display = 'none');
       document.body.style.overflow = 'auto';
     }
   });
@@ -36,7 +60,9 @@ export function initCertModal() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && certModal.style.display === 'block') {
       certModal.style.display = 'none';
-      certViewer.src = '';
+      certViewer && (certViewer.src = '');
+      const certImage = document.getElementById('certImage') as HTMLImageElement | null;
+      certImage && (certImage.src = '', certImage.style.display = 'none');
       document.body.style.overflow = 'auto';
     }
   });
