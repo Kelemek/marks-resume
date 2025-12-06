@@ -1,0 +1,103 @@
+---
+import { resumeData } from '../data/resumeData';
+import type { Certificate } from '../data/resumeData';
+
+const { certificates, scrimbaCertificates } = resumeData;
+---
+
+<section id="education" class="py-12 md:py-20 bg-(--color-bg-primary)">
+  <div class="max-w-6xl mx-auto px-4 md:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-(--color-text-primary) mb-8 pb-4 border-b border-(--color-border) relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-(--color-accent)">Education & Certifications</h2>
+    <div id="education-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Regular certificates */}
+      {certificates.map((cert: Certificate) => (
+        <div class="bg-(--color-bg-secondary) rounded-lg p-5 border border-(--color-border) flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
+          <div class="flex-1 min-w-0">
+            <h3 class="text-base font-semibold text-(--color-text-primary) mb-1">{cert.title}</h3>
+            <p class="text-sm text-(--color-text-muted)">{cert.institution}</p>
+          </div>
+          {cert.pdfPath && (
+            <button 
+              class="cert-button flex items-center gap-2 px-4 py-2 bg-(--color-bg-tertiary) text-(--color-text-secondary) rounded-md border border-(--color-border) cursor-pointer transition-all duration-300 text-sm hover:bg-(--color-accent) hover:text-white hover:border-(--color-accent)" 
+              data-cert={cert.pdfPath} 
+              aria-label={cert.ariaLabel || `View ${cert.title}`}
+            >
+              <span class="cert-icon w-4 h-4 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M14%202H6a2%202%200%200%200-2%202v16a2%202%200%200%200%202%202h12a2%202%200%200%200%202-2V8z%22%2F%3E%3Cpath%20d%3D%22M14%202v6h6M16%2013H8M16%2017H8M10%209H8%22%2F%3E%3C%2Fsvg%3E') bg-contain bg-no-repeat"></span>
+              <span class="cert-text">View</span>
+            </button>
+          )}
+        </div>
+      ))}
+
+      {/* Scrimba certificates stacked card */}
+      <div class="stacked-card-container col-span-1 sm:col-span-2 lg:col-span-3">
+        <div class="stacked-card relative bg-(--color-bg-secondary) rounded-lg border border-(--color-border)" id="scrimbaStack">
+          <div class="stacked-card-header flex justify-between items-center p-5 cursor-pointer bg-(--color-bg-tertiary) border-b border-(--color-border)">
+            <h3 class="text-base font-semibold text-(--color-text-primary) m-0">Scrimba Certificates ({scrimbaCertificates.length})</h3>
+            <button class="stack-toggle bg-transparent border-none cursor-pointer p-2 text-(--color-text-muted) transition-transform duration-300" aria-label="Toggle Scrimba certificates">
+              <span class="stack-toggle-icon inline-block transition-transform duration-300">▼</span>
+            </button>
+          </div>
+          <div class="stacked-card-content grid grid-rows-[0fr] transition-all duration-500 ease-in-out opacity-0">
+            <div class="overflow-hidden">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
+              {scrimbaCertificates.map((cert: Certificate) => (
+                <div class="scrimba-cert-card bg-(--color-bg-tertiary) rounded-lg p-5 border border-(--color-border) flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-base font-semibold text-(--color-text-primary) mb-1">{cert.title}</h3>
+                    <p class="text-sm text-(--color-text-muted)">{cert.institution}</p>
+                  </div>
+                  {cert.pdfPath && (
+                    <button 
+                      class="cert-button flex items-center gap-2 px-4 py-2 bg-(--color-bg-secondary) text-(--color-text-secondary) rounded-md border border-(--color-border) cursor-pointer transition-all duration-300 text-sm hover:bg-(--color-accent) hover:text-white hover:border-(--color-accent)" 
+                      data-cert={cert.pdfPath} 
+                      aria-label={cert.ariaLabel || `View ${cert.title}`}
+                    >
+                      <span class="cert-icon w-4 h-4 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M14%202H6a2%202%200%200%200-2%202v16a2%202%200%200%200%202%202h12a2%202%200%200%200%202-2V8z%22%2F%3E%3Cpath%20d%3D%22M14%202v6h6M16%2013H8M16%2017H8M10%209H8%22%2F%3E%3C%2Fsvg%3E') bg-contain bg-no-repeat"></span>
+                      <span class="cert-text">View</span>
+                    </button>
+                  )}
+                </div>
+              ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-8 bg-(--color-bg-secondary) rounded-lg p-6 border border-(--color-border)">
+      <h3 class="text-lg font-semibold text-(--color-text-primary) mb-2">Professional Training</h3>
+      <p class="text-(--color-text-secondary) m-0">Training courses in Exchange 5.5/2000/2010, SMS 2.0, WebLogic 6.0, SQL Server 6.5, classic ASP, Frontend and Fullstack Web Development.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Expanded state for stacked card - using grid-rows for smooth animation */
+  .stacked-card.expanded .stacked-card-content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  
+  .stacked-card.expanded .stack-toggle-icon {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  // Initialize stacked card toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const stackHeader = document.querySelector('.stacked-card-header');
+    const stackIcon = document.querySelector('.stack-toggle-icon');
+    const stackedCard = document.getElementById('scrimbaStack');
+
+    if (stackHeader && stackIcon && stackedCard) {
+      stackHeader.addEventListener('click', () => {
+        stackedCard.classList.toggle('expanded');
+        stackIcon.textContent = stackedCard.classList.contains('expanded') ? '▲' : '▼';
+      });
+      (stackHeader as HTMLElement).style.cursor = 'pointer';
+    }
+  });
+</script>

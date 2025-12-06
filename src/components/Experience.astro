@@ -1,0 +1,46 @@
+---
+import { resumeData } from '../data/resumeData';
+import type { Job } from '../data/resumeData';
+
+const { jobs } = resumeData;
+---
+
+<section id="experience" class="py-12 md:py-20 bg-(--color-bg-primary)">
+  <div class="max-w-6xl mx-auto px-4 md:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold text-(--color-text-primary) mb-8 pb-4 border-b border-(--color-border) relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-(--color-accent)">Professional Experience</h2>
+    
+    {jobs.map((job: Job) => (
+      <div class="bg-(--color-bg-secondary) rounded-lg p-6 mb-6 border border-(--color-border) shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+          <div>
+            <h3 class="text-xl font-semibold text-(--color-text-primary) m-0">{job.title}</h3>
+            <p class="text-(--color-text-muted) text-sm mt-1">{job.company}, {job.location}</p>
+          </div>
+          <span class="text-(--color-accent) font-medium text-sm whitespace-nowrap">{job.period}</span>
+        </div>
+        <div class="text-(--color-text-secondary) leading-relaxed">
+          {job.achievements && job.achievements.length > 0 && (
+            <>
+              <h4 class="text-base font-semibold text-(--color-text-primary) mt-4 mb-2">Achievements:</h4>
+              <ul class="list-disc pl-6 space-y-2">
+                {job.achievements.map((achievement: string) => (
+                  <li>{achievement}</li>
+                ))}
+              </ul>
+            </>
+          )}
+          {job.responsibilities && job.responsibilities.length > 0 && (
+            <>
+              <h4 class="text-base font-semibold text-(--color-text-primary) mt-4 mb-2">Responsibilities:</h4>
+              <ul class="list-disc pl-6 space-y-2">
+                {job.responsibilities.map((responsibility: string) => (
+                  <li>{responsibility}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

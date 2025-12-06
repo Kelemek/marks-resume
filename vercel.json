@@ -1,0 +1,9 @@
+{
+  "framework": "astro",
+  "speedInsights": {
+    "enabled": true
+  },
+  "analytics": {
+    "enabled": true
+  }
+}
