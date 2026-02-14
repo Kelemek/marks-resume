@@ -89,13 +89,11 @@ const { certificates, scrimbaCertificates } = resumeData;
   // Initialize stacked card toggle functionality
   document.addEventListener('DOMContentLoaded', () => {
     const stackHeader = document.querySelector('.stacked-card-header');
-    const stackIcon = document.querySelector('.stack-toggle-icon');
     const stackedCard = document.getElementById('scrimbaStack');
 
-    if (stackHeader && stackIcon && stackedCard) {
+    if (stackHeader && stackedCard) {
       stackHeader.addEventListener('click', () => {
         stackedCard.classList.toggle('expanded');
-        stackIcon.textContent = stackedCard.classList.contains('expanded') ? '▲' : '▼';
       });
       (stackHeader as HTMLElement).style.cursor = 'pointer';
     }
