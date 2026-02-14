@@ -35,6 +35,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Scroll offset for fixed navbar - align section tops with navbar bottom (height varies by breakpoint) */
+section[id] {
+  scroll-margin-top: 72px; /* ≤480px: single row with hamburger */
+}
+@media (min-width: 481px) {
+  section[id] {
+    scroll-margin-top: 115px; /* 481–950px: 2-row grid */
+  }
+}
+@media (min-width: 951px) {
+  section[id] {
+    scroll-margin-top: 73px; /* >950px: single row with all links */
+  }
+}
+
 * {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
@@ -65,8 +80,13 @@ body {
   display: none;
 }
 
+.hamburger-line {
+  transform-origin: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
 .hamburger.active .hamburger-line:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
+  transform: translateY(6px) rotate(45deg);
 }
 
 .hamburger.active .hamburger-line:nth-child(2) {
@@ -74,7 +94,7 @@ body {
 }
 
 .hamburger.active .hamburger-line:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 /* Navigation container - default (large screens) */
