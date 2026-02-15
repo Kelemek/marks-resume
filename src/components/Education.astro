@@ -5,20 +5,20 @@ const resumeData = await getResumeData();
 const { certificates, scrimbaCertificates } = resumeData;
 ---
 
-<section id="education" class="py-12 md:py-10 bg-(--color-bg-primary)">
+<section id="education" class="py-12 md:py-10 bg-bg-primary">
   <div class="max-w-6xl mx-auto px-4 md:px-8">
-    <h2 class="text-2xl md:text-3xl font-bold text-(--color-text-primary) mb-8 pb-4 border-b border-(--color-border) relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-(--color-accent)">Education & Certifications</h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-8 pb-4 border-b border-border relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-accent">Education & Certifications</h2>
     <div id="education-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {/* Regular certificates */}
       {certificates.map((cert) => (
-        <div class="bg-(--color-bg-secondary) rounded-lg p-5 border border-(--color-border) flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
+        <div class="bg-bg-secondary rounded-lg p-5 border border-border flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent">
           <div class="flex-1 min-w-0">
-            <h3 class="text-base font-semibold text-(--color-text-primary) mb-1">{cert.title}</h3>
-            <p class="text-sm text-(--color-text-muted)">{cert.institution}</p>
+            <h3 class="text-base font-semibold text-text-primary mb-1">{cert.title}</h3>
+            <p class="text-sm text-text-muted">{cert.institution}</p>
           </div>
           {cert.pdfPath && (
             <button 
-              class="cert-button flex items-center gap-2 px-4 py-2 bg-(--color-bg-tertiary) text-(--color-text-secondary) rounded-md border border-(--color-border) cursor-pointer transition-all duration-300 text-sm hover:bg-(--color-accent) hover:text-white hover:border-(--color-accent)" 
+              class="cert-button flex items-center gap-2 px-4 py-2 bg-bg-tertiary text-text-secondary rounded-md border border-border cursor-pointer transition-all duration-300 text-sm hover:bg-accent hover:text-white hover:border-accent" 
               data-cert={cert.pdfPath} 
               aria-label={cert.ariaLabel || `View ${cert.title}`}
             >
@@ -31,10 +31,10 @@ const { certificates, scrimbaCertificates } = resumeData;
 
       {/* Scrimba certificates stacked card */}
       <div class="stacked-card-container col-span-1 sm:col-span-2 lg:col-span-3">
-        <div class="stacked-card relative bg-(--color-bg-secondary) rounded-lg border border-(--color-border)" id="scrimbaStack">
-          <div class="stacked-card-header flex justify-between items-center p-5 cursor-pointer bg-(--color-bg-tertiary) border-b border-(--color-border)">
-            <h3 class="text-base font-semibold text-(--color-text-primary) m-0">Scrimba Certificates ({scrimbaCertificates.length})</h3>
-            <button class="stack-toggle bg-transparent border-none cursor-pointer p-2 text-(--color-text-muted) transition-transform duration-300" aria-label="Toggle Scrimba certificates">
+        <div class="stacked-card relative bg-bg-secondary rounded-lg border border-border" id="scrimbaStack">
+          <div class="stacked-card-header flex justify-between items-center p-5 cursor-pointer bg-bg-tertiary border-b border-border">
+            <h3 class="text-base font-semibold text-text-primary m-0">Scrimba Certificates ({scrimbaCertificates.length})</h3>
+            <button class="stack-toggle bg-transparent border-none cursor-pointer p-2 text-text-muted transition-transform duration-300" aria-label="Toggle Scrimba certificates">
               <span class="stack-toggle-icon inline-block transition-transform duration-300">▼</span>
             </button>
           </div>
@@ -42,14 +42,14 @@ const { certificates, scrimbaCertificates } = resumeData;
             <div class="overflow-hidden">
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
               {scrimbaCertificates.map((cert) => (
-                <div class="scrimba-cert-card bg-(--color-bg-tertiary) rounded-lg p-5 border border-(--color-border) flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-(--color-accent)">
+                <div class="scrimba-cert-card bg-bg-tertiary rounded-lg p-5 border border-border flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent">
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-base font-semibold text-(--color-text-primary) mb-1">{cert.title}</h3>
-                    <p class="text-sm text-(--color-text-muted)">{cert.institution}</p>
+                    <h3 class="text-base font-semibold text-text-primary mb-1">{cert.title}</h3>
+                    <p class="text-sm text-text-muted">{cert.institution}</p>
                   </div>
                   {cert.pdfPath && (
                     <button 
-                      class="cert-button flex items-center gap-2 px-4 py-2 bg-(--color-bg-secondary) text-(--color-text-secondary) rounded-md border border-(--color-border) cursor-pointer transition-all duration-300 text-sm hover:bg-(--color-accent) hover:text-white hover:border-(--color-accent)" 
+                      class="cert-button flex items-center gap-2 px-4 py-2 bg-bg-secondary text-text-secondary rounded-md border border-border cursor-pointer transition-all duration-300 text-sm hover:bg-accent hover:text-white hover:border-accent" 
                       data-cert={cert.pdfPath} 
                       aria-label={cert.ariaLabel || `View ${cert.title}`}
                     >
@@ -66,9 +66,9 @@ const { certificates, scrimbaCertificates } = resumeData;
       </div>
     </div>
     
-    <div class="mt-8 bg-(--color-bg-secondary) rounded-lg p-6 border border-(--color-border)">
-      <h3 class="text-lg font-semibold text-(--color-text-primary) mb-2">Professional Training</h3>
-      <p class="text-(--color-text-secondary) m-0">Training courses in Exchange 5.5/2000/2010, SMS 2.0, WebLogic 6.0, SQL Server 6.5, classic ASP, Frontend and Fullstack Web Development.</p>
+    <div class="mt-8 bg-bg-secondary rounded-lg p-6 border border-border">
+      <h3 class="text-lg font-semibold text-text-primary mb-2">Professional Training</h3>
+      <p class="text-text-secondary m-0">Training courses in Exchange 5.5/2000/2010, SMS 2.0, WebLogic 6.0, SQL Server 6.5, classic ASP, Frontend and Fullstack Web Development.</p>
     </div>
   </div>
 </section>

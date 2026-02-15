@@ -1,4 +1,6 @@
 {
+  "vitest.enable": true,
+  "vitest.include": ["src/**/*.{test,spec}.{ts,tsx}"],
   "css.lint.unknownAtRules": "ignore",
   "tailwindCSS.experimental.classRegex": [
     ["class=\"([^\"]*)\"", "([a-zA-Z0-9\\-:\\[\\]\\(\\)/]+)"]

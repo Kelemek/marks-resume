@@ -25,19 +25,19 @@ const CLARITY_ID = (import.meta.env.VITE_CLARITY_ID as string) || '';
     <script is:inline set:html={`(function(c,l,a,r,i,t,y){if(typeof c[a]==='function')return;c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/${CLARITY_ID}";y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${CLARITY_ID}");`} />
   )}
 </head>
-<body class="font-sans leading-relaxed text-(--color-text-secondary) bg-(--color-bg-primary)">
+<body class="font-sans leading-relaxed text-text-secondary bg-bg-primary">
   <!-- Navigation -->
-  <nav class="navbar fixed top-0 left-0 right-0 bg-transparent backdrop-blur-md border-b border-(--color-border) z-50 px-4 md:px-8">
+  <nav class="navbar fixed top-0 left-0 right-0 bg-transparent backdrop-blur-md border-b border-border z-50 px-4 md:px-8">
     <div class="nav-container max-w-6xl mx-auto py-4">
-      <a href="#top" class="nav-logo text-xl font-semibold no-underline text-(--color-text-primary) whitespace-nowrap shrink-0">Mark Dean Larson</a>
+      <a href="#top" class="nav-logo text-xl font-semibold no-underline text-text-primary whitespace-nowrap shrink-0">Mark Dean Larson</a>
       
       <div class="nav-right flex items-center gap-4">
         <button 
           id="themeToggle" 
-          class="theme-toggle bg-transparent border-2 border-(--color-border) rounded-md px-4 py-2 flex items-center justify-center cursor-pointer transition-all duration-300 whitespace-nowrap min-w-[110px] hover:border-(--color-text-muted) hover:bg-(--color-bg-secondary)"
+          class="theme-toggle bg-transparent border-2 border-border rounded-md px-4 py-2 flex items-center justify-center cursor-pointer transition-all duration-300 whitespace-nowrap min-w-[110px] hover:border-text-muted hover:bg-bg-secondary"
           aria-label="Toggle dark/light mode"
         >
-          <span class="theme-text text-sm font-medium text-(--color-text-muted) transition-colors duration-300">Dark Mode</span>
+          <span class="theme-text text-sm font-medium text-text-muted transition-colors duration-300">Dark Mode</span>
         </button>
         
         <button 
@@ -45,19 +45,19 @@ const CLARITY_ID = (import.meta.env.VITE_CLARITY_ID as string) || '';
           id="hamburgerMenu" 
           aria-label="Toggle navigation menu"
         >
-          <span class="hamburger-line w-6 h-0.5 bg-(--color-text-primary) my-0.5 transition-all duration-300 rounded-sm"></span>
-          <span class="hamburger-line w-6 h-0.5 bg-(--color-text-primary) my-0.5 transition-all duration-300 rounded-sm"></span>
-          <span class="hamburger-line w-6 h-0.5 bg-(--color-text-primary) my-0.5 transition-all duration-300 rounded-sm"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-all duration-300 rounded-sm"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-all duration-300 rounded-sm"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-all duration-300 rounded-sm"></span>
         </button>
       </div>
       
       <div class="nav-links flex gap-8 items-center" id="navLinks">
-        <a href="#profile" class="nav-link no-underline text-(--color-text-muted) font-medium transition-colors duration-300 hover:text-(--color-text-primary)">Profile</a>
-        <a href="#experience" class="nav-link no-underline text-(--color-text-muted) font-medium transition-colors duration-300 hover:text-(--color-text-primary)">Experience</a>
-        <a href="#skills" class="nav-link no-underline text-(--color-text-muted) font-medium transition-colors duration-300 hover:text-(--color-text-primary)">Skills</a>
-        <a href="#education" class="nav-link no-underline text-(--color-text-muted) font-medium transition-colors duration-300 hover:text-(--color-text-primary)">Education</a>
-        <a href="#contact" class="nav-link no-underline text-(--color-text-muted) font-medium transition-colors duration-300 hover:text-(--color-text-primary)">Contact</a>
-        <a href="https://portfolio.romans8.net" target="_blank" rel="noopener noreferrer" class="nav-link no-underline text-(--color-text-muted) font-medium transition-colors duration-300 hover:text-(--color-text-primary)">Portfolio</a>
+        <a href="#profile" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Profile</a>
+        <a href="#experience" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Experience</a>
+        <a href="#skills" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Skills</a>
+        <a href="#education" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Education</a>
+        <a href="#contact" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Contact</a>
+        <a href="https://portfolio.romans8.net" target="_blank" rel="noopener noreferrer" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Portfolio</a>
       </div>
     </div>
   </nav>
@@ -69,8 +69,8 @@ const CLARITY_ID = (import.meta.env.VITE_CLARITY_ID as string) || '';
 
   <!-- Certificate Modal -->
   <div id="certModal" class="modal hidden fixed z-2000 inset-0 bg-black/80">
-    <div class="modal-content relative bg-(--color-bg-primary) mx-auto mt-[2%] p-0 border border-(--color-border) rounded-lg w-[90%] max-w-[900px] h-[90%] shadow-2xl">
-      <span class="close absolute top-2.5 right-5 text-(--color-text-muted) text-3xl font-bold cursor-pointer z-2001 bg-(--color-bg-primary) rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 hover:text-(--color-text-primary) hover:bg-(--color-bg-secondary)">&times;</span>
+    <div class="modal-content relative bg-bg-primary mx-auto mt-[2%] p-0 border border-border rounded-lg w-[90%] max-w-[900px] h-[90%] shadow-2xl">
+      <span class="close absolute top-2.5 right-5 text-text-muted text-3xl font-bold cursor-pointer z-2001 bg-bg-primary rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 hover:text-text-primary hover:bg-bg-secondary">&times;</span>
       <div class="modal-body p-5 h-[calc(100%-40px)] flex items-center justify-center">
         <iframe id="certViewer" src="" frameborder="0" class="w-full h-full border-none rounded-md" style="display:none"></iframe>
         <img id="certImage" src="" alt="Certificate" class="max-w-full max-h-full object-contain rounded-md" style="display:none" />
