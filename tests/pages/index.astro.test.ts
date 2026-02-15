@@ -3,7 +3,7 @@
  */
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, it, expect, vi } from 'vitest';
-import Index from './index.astro';
+import Index from '../../src/pages/index.astro';
 
 const mockResumeData = vi.hoisted(() => ({
   systemsSoftware: [{ name: 'VMware', years: '10+' }],
@@ -14,7 +14,7 @@ const mockResumeData = vi.hoisted(() => ({
   itStartYear: 1995,
 }));
 
-vi.mock('../lib/resumeData', () => ({
+vi.mock('../../src/lib/resumeData', () => ({
   getResumeData: vi.fn().mockResolvedValue(mockResumeData),
   calculateITExperience: vi.fn((year: number) => new Date().getFullYear() - year),
 }));
