@@ -136,6 +136,21 @@ body.theme-transitioning * {
   .motion-safe-nudge:hover {
     transform: translateY(-1px);
   }
+
+  .scroll-to-top {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.5rem);
+    transition-property: opacity, transform, color, background-color, border-color, box-shadow;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+
+  .scroll-to-top.scroll-to-top--visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 }
 
 /* Light theme overrides */
@@ -352,8 +367,14 @@ body.theme-transitioning * {
   .stacked-card::before,
   .stacked-card::after,
   .stacked-card-content,
-  .stack-toggle-icon {
+  .stack-toggle-icon,
+  .scroll-to-top {
     transition: none !important;
+  }
+
+  .scroll-to-top,
+  .scroll-to-top.scroll-to-top--visible {
+    transform: none !important;
   }
 }
 

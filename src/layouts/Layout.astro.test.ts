@@ -56,6 +56,8 @@ describe('Layout', () => {
     expect(html).toContain('id="themeToggle"');
     expect(html).toContain('id="hamburgerMenu"');
     expect(html).toContain('id="navLinks"');
+    expect(html).toContain('id="scrollToTop"');
+    expect(html).toContain('aria-label="Scroll to top"');
   });
 
   it('renders certificate modal structure', async () => {
