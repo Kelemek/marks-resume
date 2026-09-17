@@ -25,7 +25,7 @@ describe('Layout', () => {
       slots: { default: '' },
     });
 
-    expect(html).toContain('Senior Systems Engineer');
+    expect(html).toContain('Systems Engineer/Frontend Developer');
   });
 
   it('renders custom description when provided', async () => {

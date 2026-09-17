@@ -5,3 +5,5 @@ coverage/
 .DS_Store
 .astro/dev.json
 .astro/settings.json
+.agents/
+skills-lock.json

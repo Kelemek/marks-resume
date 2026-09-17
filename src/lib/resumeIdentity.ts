@@ -2,6 +2,7 @@
 
 export const resumeIdentity = {
   fullName: 'Mark Dean Larson',
+  professionalRole: 'Systems Engineer/Frontend Developer',
   atsName: 'MARK LARSON',
   email: 'markdlarson@me.com',
   phone: '763.355.2923',

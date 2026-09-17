@@ -25,6 +25,9 @@ describe('Education', () => {
     expect(html).toContain('BSc Computer Science');
     expect(html).toContain('University');
     expect(html).toContain('Scrimba Certificates');
+    expect(html).toContain('id="scrimbaStackToggle"');
+    expect(html).toContain('aria-expanded="false"');
+    expect(html).toContain('aria-controls="scrimbaStackPanel"');
     expect(html).toContain('Frontend Path');
     expect(html).toContain('Professional Training');
     expect(html).toContain('id="education"');

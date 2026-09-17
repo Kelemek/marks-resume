@@ -7,7 +7,7 @@ const { certificates, scrimbaCertificates } = (Astro.props as ResumeSectionProps
 
 <section id="education" class="py-12 md:py-10 bg-bg-primary">
   <div class="max-w-6xl mx-auto px-4 md:px-8">
-    <h2 class="text-2xl md:text-3xl font-bold text-text-primary mb-8 pb-4 border-b border-border relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-accent">Education & Certifications</h2>
+    <h2 class="heading-section text-2xl md:text-3xl font-bold text-text-primary mb-8 pb-4 border-b border-border relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-16 after:h-1 after:bg-accent">Education & Certifications</h2>
     <div id="education-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {certificates.map((cert) => (
         <CertificateCard cert={cert} />
@@ -15,13 +15,20 @@ const { certificates, scrimbaCertificates } = (Astro.props as ResumeSectionProps
 
       <div class="stacked-card-container col-span-1 sm:col-span-2 lg:col-span-3">
         <div class="stacked-card relative bg-bg-secondary rounded-lg border border-border" id="scrimbaStack">
-          <div class="stacked-card-header flex justify-between items-center p-5 cursor-pointer bg-bg-tertiary border-b border-border">
-            <h3 class="text-base font-semibold text-text-primary m-0">Scrimba Certificates ({scrimbaCertificates.length})</h3>
-            <button class="stack-toggle bg-transparent border-none cursor-pointer p-2 text-text-muted transition-transform duration-300" aria-label="Toggle Scrimba certificates">
-              <span class="stack-toggle-icon inline-block transition-transform duration-300">▼</span>
-            </button>
-          </div>
-          <div class="stacked-card-content grid grid-rows-[0fr] transition-all duration-500 ease-in-out opacity-0">
+          <button
+            type="button"
+            id="scrimbaStackToggle"
+            class="stacked-card-header focus-ring flex w-full justify-between items-center gap-3 p-5 cursor-pointer bg-bg-tertiary border-0 border-b border-border text-left font-inherit text-text-primary"
+            aria-expanded="false"
+            aria-controls="scrimbaStackPanel"
+          >
+            <span class="text-base font-semibold">Scrimba Certificates ({scrimbaCertificates.length})</span>
+            <span class="stack-toggle-icon flex min-w-10 min-h-10 shrink-0 items-center justify-center text-text-muted transition-transform duration-300 ease-out" aria-hidden="true">▼</span>
+          </button>
+          <div
+            id="scrimbaStackPanel"
+            class="stacked-card-content grid grid-rows-[0fr] transition-[grid-template-rows,opacity] duration-500 ease-out opacity-0"
+          >
             <div class="overflow-hidden">
               <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
                 {scrimbaCertificates.map((cert) => (
@@ -34,9 +41,9 @@ const { certificates, scrimbaCertificates } = (Astro.props as ResumeSectionProps
       </div>
     </div>
 
-    <div class="mt-8 bg-bg-secondary rounded-lg p-6 border border-border">
+    <div class="card-surface mt-8 bg-bg-secondary rounded-lg p-6 border border-border">
       <h3 class="text-lg font-semibold text-text-primary mb-2">Professional Training</h3>
-      <p class="text-text-secondary m-0">Training courses in Exchange 5.5/2000/2010, SMS 2.0, WebLogic 6.0, SQL Server 6.5, classic ASP, Frontend and Fullstack Web Development.</p>
+      <p class="prose-readable text-text-secondary m-0">Training courses in Exchange 5.5/2000/2010, SMS 2.0, WebLogic 6.0, SQL Server 6.5, classic ASP, Frontend and Fullstack Web Development.</p>
     </div>
   </div>
 </section>
@@ -54,14 +61,14 @@ const { certificates, scrimbaCertificates } = (Astro.props as ResumeSectionProps
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const stackHeader = document.querySelector('.stacked-card-header');
+    const stackToggle = document.getElementById('scrimbaStackToggle');
     const stackedCard = document.getElementById('scrimbaStack');
 
-    if (stackHeader && stackedCard) {
-      stackHeader.addEventListener('click', () => {
-        stackedCard.classList.toggle('expanded');
+    if (stackToggle && stackedCard) {
+      stackToggle.addEventListener('click', () => {
+        const expanded = stackedCard.classList.toggle('expanded');
+        stackToggle.setAttribute('aria-expanded', String(expanded));
       });
-      (stackHeader as HTMLElement).style.cursor = 'pointer';
     }
   });
 </script>

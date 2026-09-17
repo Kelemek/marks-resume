@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title,
-  description = `${resumeIdentity.fullName}'s professional resume - Senior Systems Engineer, Software Developer, and Strategic Technology Leader with expertise in cloud architecture, automation, and team leadership.`,
+  description = `${resumeIdentity.fullName}'s professional resume — ${resumeIdentity.professionalRole} with expertise in cloud architecture, automation, and team leadership.`,
 } = Astro.props;
 ---
 
@@ -22,39 +22,39 @@ const {
   <title>{title}</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
-<body class="font-sans leading-relaxed text-text-secondary bg-bg-primary">
+<body class="font-sans antialiased leading-relaxed text-text-secondary bg-bg-primary">
   <!-- Navigation -->
   <nav class="navbar fixed top-0 left-0 right-0 bg-transparent backdrop-blur-md border-b border-border z-50 px-4 md:px-8">
     <div class="nav-container max-w-6xl mx-auto py-4">
-      <a href="#top" class="nav-logo text-xl font-semibold no-underline text-text-primary whitespace-nowrap shrink-0">{resumeIdentity.fullName}</a>
+      <a href="#top" class="nav-logo focus-ring text-xl font-semibold no-underline text-text-primary whitespace-nowrap shrink-0">{resumeIdentity.fullName}</a>
       
       <div class="nav-right flex items-center gap-4">
         <button 
           id="themeToggle" 
-          class="theme-toggle bg-transparent border-2 border-border rounded-md px-4 py-2 flex items-center justify-center cursor-pointer transition-all duration-300 whitespace-nowrap min-w-[110px] hover:border-text-muted hover:bg-bg-secondary"
+          class="theme-toggle focus-ring btn-interactive bg-transparent border-2 border-border rounded-md px-4 py-2 flex items-center justify-center cursor-pointer whitespace-nowrap min-w-[110px] hover:border-text-muted hover:bg-bg-secondary"
           aria-label="Toggle dark/light mode"
         >
           <span class="theme-text text-sm font-medium text-text-muted transition-colors duration-300">Dark Mode</span>
         </button>
         
         <button 
-          class="hamburger flex-col justify-center items-center bg-transparent border-none cursor-pointer p-2 w-10 h-10 relative" 
+          class="hamburger focus-ring flex flex-col justify-center items-center bg-transparent border-none cursor-pointer p-2 w-10 h-10 relative" 
           id="hamburgerMenu" 
           aria-label="Toggle navigation menu"
         >
-          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-all duration-300 rounded-sm"></span>
-          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-all duration-300 rounded-sm"></span>
-          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-all duration-300 rounded-sm"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-[transform,opacity] duration-300 rounded-sm"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-[transform,opacity] duration-300 rounded-sm"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary my-0.5 transition-[transform,opacity] duration-300 rounded-sm"></span>
         </button>
       </div>
       
       <div class="nav-links flex gap-8 items-center" id="navLinks">
-        <a href="#profile" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Profile</a>
-        <a href="#experience" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Experience</a>
-        <a href="#skills" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Skills</a>
-        <a href="#education" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Education</a>
-        <a href="#contact" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Contact</a>
-        <a href="https://portfolio.romans8.net" target="_blank" rel="noopener noreferrer" class="nav-link no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Portfolio</a>
+        <a href="#profile" class="nav-link focus-ring no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Profile</a>
+        <a href="#experience" class="nav-link focus-ring no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Experience</a>
+        <a href="#skills" class="nav-link focus-ring no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Skills</a>
+        <a href="#education" class="nav-link focus-ring no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Education</a>
+        <a href="#contact" class="nav-link focus-ring no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Contact</a>
+        <a href="https://portfolio.romans8.net" target="_blank" rel="noopener noreferrer" class="nav-link focus-ring no-underline text-text-muted font-medium transition-colors duration-300 hover:text-text-primary">Portfolio</a>
       </div>
     </div>
   </nav>
@@ -66,11 +66,11 @@ const {
 
   <!-- Certificate Modal -->
   <div id="certModal" class="modal hidden fixed z-2000 inset-0 bg-black/80">
-    <div class="modal-content relative bg-bg-primary mx-auto mt-[2%] p-0 border border-border rounded-lg w-[90%] max-w-[900px] h-[90%] shadow-2xl">
-      <span class="close absolute top-2.5 right-5 text-text-muted text-3xl font-bold cursor-pointer z-2001 bg-bg-primary rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300 hover:text-text-primary hover:bg-bg-secondary">&times;</span>
+    <div class="modal-content card-surface relative bg-bg-primary mx-auto mt-[2%] p-0 border border-border rounded-lg w-[90%] max-w-[900px] h-[90%]">
+      <span class="close focus-ring btn-interactive absolute top-2.5 right-5 text-text-muted text-3xl font-bold cursor-pointer z-2001 bg-bg-primary rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-300 hover:text-text-primary hover:bg-bg-secondary">&times;</span>
       <div class="modal-body p-5 h-[calc(100%-40px)] flex items-center justify-center">
         <iframe id="certViewer" src="" frameborder="0" class="w-full h-full border-none rounded-md" style="display:none"></iframe>
-        <img id="certImage" src="" alt="Certificate" class="max-w-full max-h-full object-contain rounded-md" style="display:none" />
+        <img id="certImage" src="" alt="Certificate" class="cert-modal-image max-w-full max-h-full object-contain rounded-md" style="display:none" />
       </div>
     </div>
   </div>
