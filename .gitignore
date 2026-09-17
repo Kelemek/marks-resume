@@ -6,4 +6,5 @@ coverage/
 .astro/dev.json
 .astro/settings.json
 .agents/
+.cursor/
 skills-lock.json
