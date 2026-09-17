@@ -1,14 +1,15 @@
 ---
 import '../styles/tailwind.css';
+import { resumeIdentity } from '../lib/resumeIdentity';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { 
-  title, 
-  description = "Mark Dean Larson's professional resume - Senior Systems Engineer, Software Developer, and Strategic Technology Leader with expertise in cloud architecture, automation, and team leadership."
+const {
+  title,
+  description = `${resumeIdentity.fullName}'s professional resume - Senior Systems Engineer, Software Developer, and Strategic Technology Leader with expertise in cloud architecture, automation, and team leadership.`,
 } = Astro.props;
 ---
 
@@ -25,7 +26,7 @@ const {
   <!-- Navigation -->
   <nav class="navbar fixed top-0 left-0 right-0 bg-transparent backdrop-blur-md border-b border-border z-50 px-4 md:px-8">
     <div class="nav-container max-w-6xl mx-auto py-4">
-      <a href="#top" class="nav-logo text-xl font-semibold no-underline text-text-primary whitespace-nowrap shrink-0">Mark Dean Larson</a>
+      <a href="#top" class="nav-logo text-xl font-semibold no-underline text-text-primary whitespace-nowrap shrink-0">{resumeIdentity.fullName}</a>
       
       <div class="nav-right flex items-center gap-4">
         <button 
@@ -82,7 +83,7 @@ const {
     import { initPostHog } from '../scripts/posthog';
 
     document.addEventListener('DOMContentLoaded', () => {
-      initPostHog();
+      void initPostHog();
       initTheme();
       initHamburger();
       initCertModal();

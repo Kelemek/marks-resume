@@ -1,3 +1,4 @@
+/// <reference path="../env.server.d.ts" />
 import { createClient } from '@supabase/supabase-js';
 
 // Server-side Supabase client using service role key

@@ -33,16 +33,7 @@ const mockSettings = { data: { id: '1', key: 'it_start_year', value: '1995' }, e
 
 mockGetPublicUrl.mockReturnValue({ data: { publicUrl: 'https://storage.example.com/cert.pdf' } });
 
-import { calculateITExperience, getResumeData } from './resumeData';
-
-describe('calculateITExperience', () => {
-  it('returns correct years based on start year', () => {
-    const currentYear = new Date().getFullYear();
-    expect(calculateITExperience(currentYear)).toBe(0);
-    expect(calculateITExperience(currentYear - 5)).toBe(5);
-    expect(calculateITExperience(currentYear - 30)).toBe(30);
-  });
-});
+import { getResumeData } from './resumeData';
 
 describe('getResumeData', () => {
   const setupMocks = (
@@ -157,5 +148,15 @@ describe('getResumeData', () => {
       { data: null, error: { message: 'Settings error' } }
     );
     await expect(getResumeData()).rejects.toThrow('Settings fetch failed: Settings error');
+  });
+
+  it('throws when it_start_year is invalid', async () => {
+    setupMocks(
+      mockSkills,
+      mockCerts,
+      mockJobs,
+      { data: { id: '1', key: 'it_start_year', value: 'not-a-year' }, error: null }
+    );
+    await expect(getResumeData()).rejects.toThrow('invalid it_start_year');
   });
 });

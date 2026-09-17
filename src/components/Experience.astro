@@ -1,8 +1,7 @@
 ---
-import { getResumeData } from '../lib/resumeData';
+import type { ResumeSectionProps } from '../lib/types';
 
-const resumeData = await getResumeData();
-const { jobs } = resumeData;
+const { jobs } = (Astro.props as ResumeSectionProps).resumeData;
 ---
 
 <section id="experience" class="py-12 md:py-10 bg-bg-primary">

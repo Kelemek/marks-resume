@@ -6,13 +6,17 @@ import Experience from '../components/Experience.astro';
 import Skills from '../components/Skills.astro';
 import Education from '../components/Education.astro';
 import Contact from '../components/Contact.astro';
+import { getResumeData } from '../lib/resumeData';
+import { resumeIdentity } from '../lib/resumeIdentity';
+
+const resumeData = await getResumeData();
 ---
 
-<Layout title="Mark Dean Larson - Resume">
-  <Hero />
-  <Profile />
-  <Experience />
-  <Skills />
-  <Education />
+<Layout title={`${resumeIdentity.fullName} - Resume`}>
+  <Hero resumeData={resumeData} />
+  <Profile resumeData={resumeData} />
+  <Experience resumeData={resumeData} />
+  <Skills resumeData={resumeData} />
+  <Education resumeData={resumeData} />
   <Contact />
 </Layout>

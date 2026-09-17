@@ -2,24 +2,31 @@
  * @vitest-environment node
  */
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Index from '../../src/pages/index.astro';
+import { mockResumeData } from '../../src/test/mockResumeData';
 
-const mockResumeData = vi.hoisted(() => ({
-  systemsSoftware: [{ name: 'VMware', years: '10+' }],
-  developmentSoftware: [{ name: 'JavaScript', years: '5+' }],
-  certificates: [{ title: 'Cert', institution: 'Inst' }],
-  scrimbaCertificates: [{ title: 'Scrimba', institution: 'Scrimba' }],
-  jobs: [{ title: 'Engineer', company: 'Co', location: 'Loc', period: '2020-24', achievements: ['A1'], responsibilities: ['R1'] }],
-  itStartYear: 1995,
+const { getResumeData } = vi.hoisted(() => ({
+  getResumeData: vi.fn(),
 }));
 
 vi.mock('../../src/lib/resumeData', () => ({
-  getResumeData: vi.fn().mockResolvedValue(mockResumeData),
-  calculateITExperience: vi.fn((year: number) => new Date().getFullYear() - year),
+  getResumeData,
 }));
 
 describe('index', () => {
+  beforeEach(() => {
+    getResumeData.mockReset();
+    getResumeData.mockResolvedValue(mockResumeData);
+  });
+
+  it('loads resume data once per page render', async () => {
+    const container = await AstroContainer.create();
+    await container.renderToString(Index);
+
+    expect(getResumeData).toHaveBeenCalledTimes(1);
+  });
+
   it('renders full resume page with all sections', async () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(Index);

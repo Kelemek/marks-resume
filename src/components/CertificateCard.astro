@@ -1,0 +1,42 @@
+---
+import type { ResumeData } from '../lib/types';
+
+type CertificateEntry = ResumeData['certificates'][number];
+
+interface Props {
+  cert: CertificateEntry;
+  variant?: 'default' | 'nested';
+}
+
+const { cert, variant = 'default' } = Astro.props;
+
+const cardClass =
+  variant === 'nested'
+    ? 'scrimba-cert-card bg-bg-tertiary rounded-lg p-5 border border-border flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent'
+    : 'bg-bg-secondary rounded-lg p-5 border border-border flex justify-between items-center gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent';
+
+const buttonClass =
+  variant === 'nested'
+    ? 'cert-button flex items-center gap-2 px-4 py-2 bg-bg-secondary text-text-secondary rounded-md border border-border cursor-pointer transition-all duration-300 text-sm hover:bg-accent hover:text-white hover:border-accent'
+    : 'cert-button flex items-center gap-2 px-4 py-2 bg-bg-tertiary text-text-secondary rounded-md border border-border cursor-pointer transition-all duration-300 text-sm hover:bg-accent hover:text-white hover:border-accent';
+
+const certIconClass =
+  "cert-icon w-4 h-4 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394a3b8%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M14%202H6a2%202%200%200%200-2%202v16a2%202%200%200%200%202%202h12a2%202%200%200%200%202-2V8z%22%2F%3E%3Cpath%20d%3D%22M14%202v6h6M16%2013H8M16%2017H8M10%209H8%22%2F%3E%3C%2Fsvg%3E') bg-contain bg-no-repeat";
+---
+
+<div class={cardClass}>
+  <div class="flex-1 min-w-0">
+    <h3 class="text-base font-semibold text-text-primary mb-1">{cert.title}</h3>
+    <p class="text-sm text-text-muted">{cert.institution}</p>
+  </div>
+  {cert.pdfPath && (
+    <button
+      class={buttonClass}
+      data-cert={cert.pdfPath}
+      aria-label={cert.ariaLabel || `View ${cert.title}`}
+    >
+      <span class={certIconClass}></span>
+      <span class="cert-text">View</span>
+    </button>
+  )}
+</div>

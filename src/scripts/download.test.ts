@@ -1,5 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { initDownload } from './download';
+import { toAtsDownloadPayload } from '../lib/atsDownload';
+import { createMockResumeData } from '../test/mockResumeData';
 
 vi.mock('file-saver', () => ({
   saveAs: vi.fn(),
@@ -10,21 +12,7 @@ describe('initDownload', () => {
     document.body.innerHTML = `
       <button id="downloadPDF">Download Resume</button>
     `;
-    (window as Window & { resumeData?: object }).resumeData = {
-      systemsSoftware: [{ name: 'VMware', years: '10+' }],
-      developmentSoftware: [{ name: 'JavaScript', years: '5+' }],
-      certificates: [{ title: 'Cert', institution: 'Inst' }],
-      scrimbaCertificates: [{ title: 'Scrimba', institution: 'Scrimba' }],
-      jobs: [{
-        title: 'Engineer',
-        company: 'Company',
-        location: 'Loc',
-        period: '2020-24',
-        achievements: ['A1'],
-        responsibilities: ['R1'],
-      }],
-      itStartYear: 1995,
-    };
+    window.atsResumeData = toAtsDownloadPayload(createMockResumeData());
   });
 
   it('returns early when download button is missing', () => {
@@ -52,7 +40,7 @@ describe('initDownload', () => {
   });
 
   it('handles missing resumeData gracefully', () => {
-    delete (window as Window & { resumeData?: object }).resumeData;
+    delete window.atsResumeData;
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     initDownload();
 
@@ -86,14 +74,15 @@ describe('initDownload', () => {
   });
 
   it('handles jobs without achievements or responsibilities', async () => {
-    (window as Window & { resumeData?: object }).resumeData = {
-      systemsSoftware: [],
-      developmentSoftware: [],
-      certificates: [],
-      scrimbaCertificates: [],
-      jobs: [{ title: 'Eng', company: 'Co', location: 'Loc', period: '2020-24' }],
-      itStartYear: 1995,
-    };
+    window.atsResumeData = toAtsDownloadPayload(
+      createMockResumeData({
+        systemsSoftware: [],
+        developmentSoftware: [],
+        certificates: [],
+        scrimbaCertificates: [],
+        jobs: [{ title: 'Eng', company: 'Co', location: 'Loc', period: '2020-24' }],
+      }),
+    );
     const { saveAs } = await import('file-saver');
     initDownload();
 

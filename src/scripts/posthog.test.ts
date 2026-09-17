@@ -15,16 +15,16 @@ describe('initPostHog', () => {
     vi.stubEnv('PUBLIC_POSTHOG_HOST', '');
   });
 
-  it('does nothing when PUBLIC_POSTHOG_KEY is not set', () => {
-    initPostHog();
+  it('does nothing when PUBLIC_POSTHOG_KEY is not set', async () => {
+    await initPostHog();
     expect(mockInit).not.toHaveBeenCalled();
   });
 
-  it('initializes PostHog when key is set', () => {
+  it('initializes PostHog when key is set', async () => {
     vi.stubEnv('PUBLIC_POSTHOG_KEY', 'phc_test_key');
     vi.stubEnv('PUBLIC_POSTHOG_HOST', 'https://us.i.posthog.com');
 
-    initPostHog();
+    await initPostHog();
 
     expect(mockInit).toHaveBeenCalledWith('phc_test_key', {
       api_host: 'https://us.i.posthog.com',
@@ -33,10 +33,10 @@ describe('initPostHog', () => {
     });
   });
 
-  it('uses default host when PUBLIC_POSTHOG_HOST is not set', () => {
+  it('uses default host when PUBLIC_POSTHOG_HOST is not set', async () => {
     vi.stubEnv('PUBLIC_POSTHOG_KEY', 'phc_test_key');
 
-    initPostHog();
+    await initPostHog();
 
     expect(mockInit).toHaveBeenCalledWith('phc_test_key', expect.objectContaining({
       api_host: 'https://us.i.posthog.com',

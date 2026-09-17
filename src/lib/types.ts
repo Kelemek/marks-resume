@@ -52,3 +52,17 @@ export interface ResumeData {
   }[];
   itStartYear: number;
 }
+
+export interface ResumeSectionProps {
+  resumeData: ResumeData;
+}
+
+/** Client-safe subset injected for the ATS download script (no cert URLs). */
+export interface AtsDownloadPayload {
+  systemsSoftware: { name: string; years: string }[];
+  developmentSoftware: { name: string; years: string }[];
+  certificates: { title: string; institution: string }[];
+  scrimbaCertificates: { title: string; institution: string }[];
+  jobs: ResumeData['jobs'];
+  itStartYear: number;
+}

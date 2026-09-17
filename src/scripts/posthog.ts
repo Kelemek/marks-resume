@@ -1,10 +1,9 @@
-import posthog from 'posthog-js';
-
-export function initPostHog() {
+export async function initPostHog() {
   const key = import.meta.env.PUBLIC_POSTHOG_KEY;
-  const host = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
-
   if (!key) return;
+
+  const host = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+  const { default: posthog } = await import('posthog-js');
 
   posthog.init(key, {
     api_host: host,

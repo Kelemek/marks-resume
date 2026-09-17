@@ -2,10 +2,11 @@
  * @vitest-environment node
  */
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import Experience from './Experience.astro';
+import { createMockResumeData } from '../test/mockResumeData';
 
-const mockResumeData = vi.hoisted(() => ({
+const resumeData = createMockResumeData({
   systemsSoftware: [],
   developmentSoftware: [],
   certificates: [],
@@ -20,17 +21,12 @@ const mockResumeData = vi.hoisted(() => ({
       responsibilities: ['Led team'],
     },
   ],
-  itStartYear: 1995,
-}));
-
-vi.mock('../lib/resumeData', () => ({
-  getResumeData: vi.fn().mockResolvedValue(mockResumeData),
-}));
+});
 
 describe('Experience', () => {
   it('renders experience section with expected content', async () => {
     const container = await AstroContainer.create();
-    const html = await container.renderToString(Experience);
+    const html = await container.renderToString(Experience, { props: { resumeData } });
 
     expect(html).toContain('Professional Experience');
     expect(html).toContain('Senior Engineer');
