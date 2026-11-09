@@ -4,7 +4,7 @@ This directory is the maintained source for verifying the user-facing behavior o
 
 ## Baseline preconditions
 
-- From the repo root, with Node 22.12+ and `npm ci` already done.
+- From the repo root, with Node 22.23.4+ and `npm ci` already done.
 - `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are set in the environment or `.env`. They must not be the `.env.example` placeholders.
 - `RESUME_BUILD_FALLBACK` is unset. A production build throws when it is `true`.
 - `scripts/verify-marks-resume/launch.sh` then `doctor.sh` must pass.

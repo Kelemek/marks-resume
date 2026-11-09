@@ -38,8 +38,8 @@ if ! command -v node >/dev/null || ! command -v npm >/dev/null; then
   echo "[verify-marks-resume] node and npm are required" >&2
   exit 1
 fi
-if ! node -e 'const [maj, min] = process.versions.node.split(".").map(Number); if (maj < 22 || (maj === 22 && min < 12)) process.exit(1)'; then
-  echo "[verify-marks-resume] Node $(node -v) is too old. Use Node 22.12 or newer (.nvmrc)." >&2
+if ! node -e 'const [maj, min, pat] = process.versions.node.split(".").map(Number); if (maj < 22 || (maj === 22 && (min < 23 || (min === 23 && pat < 4)))) process.exit(1)'; then
+  echo "[verify-marks-resume] Node $(node -v) is too old. Use Node 22.23.4 or newer (.nvmrc)." >&2
   exit 1
 fi
 if [[ ! -x "${ROOT}/node_modules/.bin/astro" ]]; then
