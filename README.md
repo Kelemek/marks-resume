@@ -16,7 +16,7 @@ Copy `.env.example` to `.env` and set:
 
 Optional: `PUBLIC_POSTHOG_KEY`, `PUBLIC_POSTHOG_HOST`
 
-Node **22.12+** (see `.nvmrc`).
+Node **22.23.4+** (see `.nvmrc`). Astro 7.4.8 declares that floor.
 
 ## Build
 

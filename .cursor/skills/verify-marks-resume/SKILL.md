@@ -11,7 +11,7 @@ The site is one page, `/`. There is no second route.
 
 ## Launch
 
-From the repo root, with Node **22.12+** (`.nvmrc`) and dependencies already installed (`npm ci`):
+From the repo root, with Node **22.23.4+** (`.nvmrc`) and dependencies already installed (`npm ci`):
 
 ```bash
 export MARKS_RESUME_VERIFY_RUN_ID="${MARKS_RESUME_VERIFY_RUN_ID:-$(date +%s)}"

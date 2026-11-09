@@ -7,6 +7,7 @@ __pycache__/
 .DS_Store
 .astro/dev.json
 .astro/settings.json
+.astro/preview.json
 .agents/
 # Ignore local Cursor files, but keep the committed verification skill.
 .cursor/*
