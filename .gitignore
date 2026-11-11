@@ -9,7 +9,11 @@ __pycache__/
 .astro/settings.json
 .astro/preview.json
 .agents/
-# Ignore local Cursor files, but keep the committed verification skill.
+# Ignore local Cursor files, but keep the committed verification skill
+# and the repo pstack model rule.
 .cursor/*
 !.cursor/skills/
+!.cursor/rules/
+.cursor/rules/*
+!.cursor/rules/pstack-models.mdc
 skills-lock.json
