@@ -17,6 +17,38 @@ async function flushPromises() {
   await Promise.resolve();
 }
 
+function wireModalBodyMetrics() {
+  const modal = document.getElementById('certModal') as HTMLElement;
+  const body = document.querySelector('.modal-body') as HTMLElement;
+  let forcedBodyWidth: number | null = null;
+
+  Object.defineProperty(body, 'clientWidth', {
+    configurable: true,
+    get() {
+      if (forcedBodyWidth !== null) return forcedBodyWidth;
+      return modal.style.display === 'none' ? 0 : 858;
+    },
+  });
+  Object.defineProperty(body, 'clientHeight', {
+    configurable: true,
+    get() {
+      if (forcedBodyWidth !== null) {
+        return Math.round((781 / 858) * forcedBodyWidth);
+      }
+      return modal.style.display === 'none' ? 0 : 781;
+    },
+  });
+
+  return {
+    setBodyWidth(width: number) {
+      forcedBodyWidth = width;
+    },
+    resetBodyWidth() {
+      forcedBodyWidth = null;
+    },
+  };
+}
+
 describe('isCertificateRasterPath', () => {
   it('detects raster extensions and data URLs', () => {
     expect(isCertificateRasterPath('/img/foo.webp')).toBe(true);
@@ -27,6 +59,8 @@ describe('isCertificateRasterPath', () => {
 });
 
 describe('initCertModal', () => {
+  let bodyMetrics: ReturnType<typeof wireModalBodyMetrics>;
+
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="certModal" style="display:none">
@@ -42,9 +76,7 @@ describe('initCertModal', () => {
       <button class="cert-button" data-cert="">Empty path</button>
       <button class="cert-button">No data-cert</button>
     `;
-    const body = document.querySelector('.modal-body') as HTMLElement;
-    Object.defineProperty(body, 'clientWidth', { configurable: true, value: 858 });
-    Object.defineProperty(body, 'clientHeight', { configurable: true, value: 781 });
+    bodyMetrics = wireModalBodyMetrics();
   });
 
   it('returns early when required elements are missing', () => {
@@ -63,6 +95,24 @@ describe('initCertModal', () => {
     expect(modal.style.display).toBe('block');
     expect(iframe.src).toContain('/test.pdf');
     expect(iframe.src).toContain('toolbar=0');
+  });
+
+  it('shows modal before layout when raster certificate is loading', async () => {
+    initCertModal();
+    const modal = document.getElementById('certModal') as HTMLElement;
+    const certImage = document.getElementById('certImage') as HTMLImageElement;
+    const certButton = document.querySelector(`.cert-button[data-cert="${TEST_IMAGE}"]`)!;
+
+    certButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(modal.style.display).toBe('block');
+
+    primeImageLoad(certImage);
+    await flushPromises();
+
+    expect(certImage.style.width).toBe('818px');
+    expect(certImage.style.height).toBe('525px');
+    expect(certImage.style.maxWidth).toBe('818px');
+    expect(certImage.style.maxHeight).toBe('525px');
   });
 
   it('shows image in img element for image extensions', async () => {
@@ -100,6 +150,43 @@ describe('initCertModal', () => {
     expect(modal.style.display).toBe('none');
     expect(certImage.style.width).toBe('');
     expect(certImage.style.height).toBe('');
+    expect(certImage.getAttribute('src')).toBeNull();
+  });
+
+  it('reopens the same cached raster certificate after src is removed', async () => {
+    initCertModal();
+    const certImage = document.getElementById('certImage') as HTMLImageElement;
+    const closeBtn = document.querySelector('.close')!;
+    const certButton = document.querySelector(`.cert-button[data-cert="${TEST_IMAGE}"]`)!;
+
+    certButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    primeImageLoad(certImage);
+    await flushPromises();
+    closeBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+    certButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    primeImageLoad(certImage);
+    await flushPromises();
+
+    expect(certImage.style.display).toBe('block');
+    expect(certImage.style.width).toBe('818px');
+  });
+
+  it('relayouts raster certificate on window resize while modal is open', async () => {
+    initCertModal();
+    const certImage = document.getElementById('certImage') as HTMLImageElement;
+    const certButton = document.querySelector(`.cert-button[data-cert="${TEST_IMAGE}"]`)!;
+
+    certButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    primeImageLoad(certImage);
+    await flushPromises();
+
+    bodyMetrics.setBodyWidth(600);
+    window.dispatchEvent(new Event('resize'));
+
+    expect(certImage.style.width).toBe('560px');
+    expect(certImage.style.height).toBe('359px');
+    expect(certImage.style.maxHeight).toBe('359px');
   });
 
   it('closes modal when close button clicked', () => {

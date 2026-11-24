@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { computeCertImageBox } from './certImageLayout';
+import { computeCertImageBox, layoutCertImage } from './certImageLayout';
 
 describe('computeCertImageBox', () => {
   it('scales landscape images to fill width when height allows', () => {
@@ -22,5 +22,26 @@ describe('computeCertImageBox', () => {
   it('returns zero box for invalid input', () => {
     expect(computeCertImageBox(0, 100, 100, 100)).toEqual({ width: 0, height: 0 });
     expect(computeCertImageBox(100, 100, 0, 100)).toEqual({ width: 0, height: 0 });
+  });
+});
+
+describe('layoutCertImage', () => {
+  it('does not set dimensions when modal body measures zero', () => {
+    document.body.innerHTML = `
+      <div class="modal-body" style="width:858px;height:781px;padding:20px">
+        <img id="certImage" alt="test" />
+      </div>
+    `;
+    const img = document.getElementById('certImage') as HTMLImageElement;
+    const body = document.querySelector('.modal-body') as HTMLElement;
+    Object.defineProperty(img, 'naturalWidth', { configurable: true, value: 2400 });
+    Object.defineProperty(img, 'naturalHeight', { configurable: true, value: 1540 });
+    Object.defineProperty(body, 'clientWidth', { configurable: true, value: 0 });
+    Object.defineProperty(body, 'clientHeight', { configurable: true, value: 0 });
+
+    layoutCertImage(img);
+
+    expect(img.style.width).toBe('');
+    expect(img.style.height).toBe('');
   });
 });

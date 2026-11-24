@@ -23,6 +23,8 @@ export function computeCertImageBox(
 export function clearCertImageLayout(img: HTMLImageElement) {
   img.style.width = '';
   img.style.height = '';
+  img.style.maxWidth = '';
+  img.style.maxHeight = '';
 }
 
 export function layoutCertImage(img: HTMLImageElement) {
@@ -37,8 +39,12 @@ export function layoutCertImage(img: HTMLImageElement) {
   const box = computeCertImageBox(img.naturalWidth, img.naturalHeight, maxW, maxH);
   if (box.width <= 0 || box.height <= 0) return;
 
-  img.style.width = `${box.width}px`;
-  img.style.height = `${box.height}px`;
+  const w = `${box.width}px`;
+  const h = `${box.height}px`;
+  img.style.width = w;
+  img.style.height = h;
+  img.style.maxWidth = w;
+  img.style.maxHeight = h;
 }
 
 export function waitForCertImage(img: HTMLImageElement): Promise<void> {

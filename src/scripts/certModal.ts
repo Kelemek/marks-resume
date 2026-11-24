@@ -20,26 +20,67 @@ export function initCertModal() {
   if (!certModal || !certViewer || !closeModal || !certImage) return;
 
   let imageShowGeneration = 0;
+  let resizeObserver: ResizeObserver | null = null;
+  let windowResizeHandler: (() => void) | null = null;
+
+  function stopRasterLayoutWatch() {
+    resizeObserver?.disconnect();
+    resizeObserver = null;
+    if (windowResizeHandler) {
+      window.removeEventListener('resize', windowResizeHandler);
+      windowResizeHandler = null;
+    }
+  }
+
+  function relayoutRasterCert() {
+    if (certModal.style.display !== 'block' || certImage.style.display === 'none') return;
+    if (certImage.naturalWidth > 0) {
+      layoutCertImage(certImage);
+    }
+  }
+
+  function startRasterLayoutWatch() {
+    stopRasterLayoutWatch();
+    const body = certImage.parentElement;
+    if (!body) return;
+
+    windowResizeHandler = relayoutRasterCert;
+    window.addEventListener('resize', windowResizeHandler);
+
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(relayoutRasterCert);
+      resizeObserver.observe(body);
+    }
+  }
+
+  function clearCertImageSource() {
+    certImage.removeAttribute('src');
+  }
 
   function closeCertModal() {
     imageShowGeneration += 1;
+    stopRasterLayoutWatch();
     certModal.style.display = 'none';
     certViewer.src = '';
     certViewer.style.display = 'none';
     clearCertImageLayout(certImage);
-    certImage.src = '';
+    clearCertImageSource();
     certImage.style.display = 'none';
     document.body.style.overflow = 'auto';
   }
 
   async function showRasterCertificate(pdfPath: string) {
     const generation = ++imageShowGeneration;
+    stopRasterLayoutWatch();
 
     certViewer.style.display = 'none';
     certViewer.src = '';
     certImage.style.display = 'none';
     clearCertImageLayout(certImage);
-    certImage.src = '';
+    clearCertImageSource();
+
+    certModal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
 
     certImage.src = pdfPath;
 
@@ -53,8 +94,7 @@ export function initCertModal() {
 
     layoutCertImage(certImage);
     certImage.style.display = 'block';
-    certModal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
+    startRasterLayoutWatch();
   }
 
   function showCertificate(pdfPath: string) {
@@ -67,10 +107,11 @@ export function initCertModal() {
       return;
     }
 
+    stopRasterLayoutWatch();
     imageShowGeneration += 1;
     certImage.style.display = 'none';
     clearCertImageLayout(certImage);
-    certImage.src = '';
+    clearCertImageSource();
     const cleanPdfUrl = `${pdfPath}#toolbar=0&navpanes=0&scrollbar=0`;
     certViewer.style.display = 'block';
     certViewer.src = cleanPdfUrl;
