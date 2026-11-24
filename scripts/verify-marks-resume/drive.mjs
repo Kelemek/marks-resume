@@ -392,7 +392,7 @@ async function driveCertificates(browser, lines) {
   await page.locator('#certModal .close').click();
   await certificateClosed(page);
 
-  const { src: unitSrc } = await openCertByAria(page, 'Introduction to Unit Testing');
+  const { src: unitSrc } = await openCertByAria(page, 'Unit Testing Tutorial');
   lines.push(`unit_testing_src=${unitSrc}`);
   await openCertificate(page, unitSrc);
   await assertRasterCertFillsModal(page, lines, 'unit_testing');
