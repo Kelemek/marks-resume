@@ -14,5 +14,8 @@ describe('Profile', () => {
     expect(html).toContain('Professional Profile');
     expect(html).toContain('Systems Engineer');
     expect(html).toContain('id="profile"');
+    expect(html).toContain(
+      'Founded Romans 8 Partners, an AI coaching and consulting practice helping small-business owners apply practical AI tools in their day-to-day work.',
+    );
   });
 });

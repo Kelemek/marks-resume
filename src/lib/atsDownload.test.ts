@@ -24,5 +24,8 @@ describe('atsDownload', () => {
     expect(text).toContain(resumeIdentity.email);
     expect(text).toContain('PROFESSIONAL SUMMARY');
     expect(text).toContain('Engineer');
+    expect(text).toContain(
+      'Founded Romans 8 Partners, an AI coaching and consulting practice helping small-business owners apply practical AI tools in their day-to-day work.',
+    );
   });
 });
