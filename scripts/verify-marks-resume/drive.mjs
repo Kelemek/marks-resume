@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 
 const feature = process.argv[2];
 const baseUrl = process.env.MARKS_RESUME_VERIFY_URL;
@@ -228,7 +228,10 @@ async function driveAtsDownload(browser, lines) {
 }
 
 function isRaster(src) {
-  return /\.(jpe?g|png|webp|gif|svg)(\?|$)/i.test(src);
+  return (
+    /^data:image\//i.test(src)
+    || /\.(jpe?g|png|webp|gif|svg)(\?|#|$)/i.test(src)
+  );
 }
 
 async function openCertificate(page, src) {
@@ -237,11 +240,15 @@ async function openCertificate(page, src) {
       const modal = document.querySelector('#certModal');
       const img = document.querySelector('#certImage');
       const frame = document.querySelector('#certViewer');
+      const styleW = parseFloat(img?.style.width ?? '');
       return modal?.style.display === 'block'
         && img?.style.display === 'block'
-        && img.src === expected
+        && (img.src === expected
+          || img.src.endsWith(expected)
+          || decodeURIComponent(img.src) === expected)
         && img.complete
         && img.naturalWidth > 0
+        && styleW > 200
         && frame?.style.display === 'none';
     }, src, { timeout: 20000 });
     return 'image';
@@ -270,13 +277,80 @@ async function certificateClosed(page) {
   });
 }
 
+async function assertRasterCertFillsModal(page, lines, label) {
+  const metrics = await page.evaluate(() => {
+    const img = document.querySelector('#certImage');
+    const body = document.querySelector('.modal-body');
+    if (!img || !body) return null;
+    const imgRect = img.getBoundingClientRect();
+    const bodyRect = body.getBoundingClientRect();
+    return {
+      imgW: imgRect.width,
+      imgH: imgRect.height,
+      bodyW: bodyRect.width,
+      bodyH: bodyRect.height,
+      styleW: img.style.width,
+      styleH: img.style.height,
+      naturalW: img.naturalWidth,
+      naturalH: img.naturalHeight,
+    };
+  });
+  check(metrics !== null, `${label}: missing #certImage or .modal-body`);
+  const minWidth = metrics.bodyW * 0.65;
+  check(
+    metrics.imgW >= minWidth,
+    `${label}: image ${Math.round(metrics.imgW)}px wide < 65% of modal body ${Math.round(metrics.bodyW)}px`,
+  );
+  lines.push(`${label}_img_css_w=${Math.round(metrics.imgW)}`);
+  lines.push(`${label}_img_css_h=${Math.round(metrics.imgH)}`);
+  lines.push(`${label}_body_w=${Math.round(metrics.bodyW)}`);
+  lines.push(`${label}_style_w=${metrics.styleW}`);
+  lines.push(`${label}_style_h=${metrics.styleH}`);
+}
+
+async function expandScrimbaStack(page, lines, { expectCollapsed = false } = {}) {
+  await page.getByRole('heading', { name: 'Education & Certifications', exact: true }).waitFor();
+  const toggle = page.locator('#scrimbaStackToggle');
+  const expanded = await toggle.getAttribute('aria-expanded');
+  if (expanded === 'true') {
+    lines.push('scrimba=already_expanded');
+    return;
+  }
+  if (expectCollapsed) {
+    check(expanded === 'false', 'scrimba toggle did not start collapsed');
+  }
+  await toggle.click();
+  await page.waitForFunction(() => document.querySelector('#scrimbaStackToggle')?.getAttribute('aria-expanded') === 'true');
+  check(hasClass(await page.locator('#scrimbaStack').getAttribute('class'), 'expanded'), 'scrimba stack did not expand');
+  lines.push('scrimba=expanded');
+}
+
+async function disableNetworkCache(page, lines) {
+  const session = await page.context().newCDPSession(page);
+  await session.send('Network.enable');
+  await session.send('Network.setCacheDisabled', { cacheDisabled: true });
+  lines.push('cache=disabled');
+}
+
+async function openCertByAria(page, ariaSubstring) {
+  const button = page.locator(`.cert-button[aria-label*="${ariaSubstring}"]`).first();
+  check(await button.count() > 0, `no cert button for aria substring ${ariaSubstring}`);
+  const src = await button.getAttribute('data-cert');
+  check(typeof src === 'string' && src.length > 0, `View button for ${ariaSubstring} has no data-cert`);
+  await button.click();
+  return { button, src };
+}
+
 async function driveCertificates(browser, lines) {
-  const context = await newContext(browser, { width: 1280, height: 900 });
+  const viewportW = Number(process.env.MARKS_RESUME_VERIFY_VIEWPORT_W || 1280);
+  const viewportH = Number(process.env.MARKS_RESUME_VERIFY_VIEWPORT_H || 900);
+  lines.push(`viewport=${viewportW}x${viewportH}`);
+  lines.push(`browser=${process.env.PLAYWRIGHT_BROWSER || 'chromium'}`);
+  const context = await newContext(browser, { width: viewportW, height: viewportH });
   const page = await context.newPage();
   page.setDefaultTimeout(20000);
   await bootPage(page);
 
-  await page.getByRole('heading', { name: 'Education & Certifications', exact: true }).waitFor();
   const toggle = page.locator('#scrimbaStackToggle');
   check((await toggle.getAttribute('aria-expanded')) === 'false', 'scrimba toggle did not start collapsed');
   check(!hasClass(await page.locator('#scrimbaStack').getAttribute('class'), 'expanded'), 'scrimba stack started expanded');
@@ -287,12 +361,72 @@ async function driveCertificates(browser, lines) {
   lines.push(`scrimba_count=${scrimbaCount}`);
   await shot(page, lines, 'certificates-collapsed.png');
 
-  await toggle.click();
-  await page.waitForFunction(() => document.querySelector('#scrimbaStackToggle')?.getAttribute('aria-expanded') === 'true');
-  check(hasClass(await page.locator('#scrimbaStack').getAttribute('class'), 'expanded'), 'scrimba stack did not expand');
+  await expandScrimbaStack(page, lines, { expectCollapsed: true });
   const nestedTitles = await page.locator('#scrimbaStackPanel h3').count();
   check(nestedTitles === scrimbaCount, `scrimba panel had ${nestedTitles} titles, label said ${scrimbaCount}`);
   await shot(page, lines, 'certificates-expanded.png');
+
+  try {
+    await disableNetworkCache(page, lines);
+  } catch {
+    lines.push('cache=disable_unavailable');
+  }
+
+  const { src: learnSrc } = await openCertByAria(page, 'Learn Next.js');
+  lines.push(`learn_next_src=${learnSrc}`);
+  await openCertificate(page, learnSrc);
+  lines.push('learn_next_open=uncached_after_reload');
+  await assertRasterCertFillsModal(page, lines, 'learn_next_uncached');
+  await shot(page, lines, 'certificates-learn-next-uncached.png');
+
+  await page.locator('#certModal .close').click();
+  await certificateClosed(page);
+  lines.push('learn_next_closed=click');
+
+  const learnButton = page.locator('.cert-button[aria-label*="Learn Next.js"]').first();
+  await learnButton.click();
+  await openCertificate(page, learnSrc);
+  lines.push('learn_next_open=repeat');
+  await assertRasterCertFillsModal(page, lines, 'learn_next_repeat');
+  await shot(page, lines, 'certificates-learn-next-repeat.png');
+  await page.locator('#certModal .close').click();
+  await certificateClosed(page);
+
+  const { src: unitSrc } = await openCertByAria(page, 'Unit Testing Tutorial');
+  lines.push(`unit_testing_src=${unitSrc}`);
+  await openCertificate(page, unitSrc);
+  await assertRasterCertFillsModal(page, lines, 'unit_testing');
+  await shot(page, lines, 'certificates-unit-testing.png');
+  await page.locator('#certModal .close').click();
+  await certificateClosed(page);
+
+  const { src: learnAgainSrc } = await openCertByAria(page, 'Learn Next.js');
+  check(learnAgainSrc === learnSrc, 'Learn Next.js data-cert changed between opens');
+  await openCertificate(page, learnAgainSrc);
+  await assertRasterCertFillsModal(page, lines, 'learn_next_after_switch');
+  lines.push('switch_sequence=learn_next,unit_testing,learn_next');
+  await shot(page, lines, 'certificates-learn-next-after-switch.png');
+  await page.locator('#certModal .close').click();
+  await certificateClosed(page);
+
+  const pdfButtons = page.locator('.cert-button[data-cert$=".pdf"], .cert-button[data-cert*=".pdf?"]');
+  const pdfCount = await pdfButtons.count();
+  if (pdfCount > 0) {
+    const pdfButton = pdfButtons.first();
+    const pdfSrc = await pdfButton.getAttribute('data-cert');
+    const pdfAria = await pdfButton.getAttribute('aria-label');
+    lines.push(`pdf_aria=${pdfAria}`);
+    lines.push(`pdf_src=${pdfSrc}`);
+    await pdfButton.click();
+    const kind = await openCertificate(page, pdfSrc);
+    check(kind === 'pdf', `expected pdf viewer, got ${kind}`);
+    lines.push('pdf_open=ok');
+    await shot(page, lines, 'certificates-pdf.png');
+    await page.locator('#certModal .close').click();
+    await certificateClosed(page);
+  } else {
+    lines.push('pdf_open=skipped_no_pdf_cert');
+  }
 
   const view = page.locator('#education-grid > div:not(.stacked-card-container) .cert-button');
   const viewCount = await view.count();
@@ -321,6 +455,7 @@ async function driveCertificates(browser, lines) {
   await certificateClosed(page);
   lines.push('closed=escape');
   await shot(page, lines, 'certificates-closed.png');
+
   return page;
 }
 
@@ -376,7 +511,10 @@ async function main() {
 
   await mkdir(evidenceDir, { recursive: true });
   const lines = [`feature=${feature}`, `url=${baseUrl}/`];
-  const browser = await chromium.launch({ headless: true });
+  const browserName = process.env.PLAYWRIGHT_BROWSER || 'chromium';
+  const browser = browserName === 'webkit'
+    ? await webkit.launch({ headless: true })
+    : await chromium.launch({ headless: true });
   let page;
   let failed = false;
   try {

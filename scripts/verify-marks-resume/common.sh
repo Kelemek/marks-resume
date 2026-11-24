@@ -133,6 +133,14 @@ ensure_playwright() {
   "$bin" install chromium
 }
 
+ensure_playwright_webkit() {
+  ensure_playwright
+  local root bin
+  root="$(repo_root)"
+  bin="${root}/node_modules/.bin/playwright"
+  "$bin" install webkit
+}
+
 list_descendants() {
   local pid="$1"
   local child

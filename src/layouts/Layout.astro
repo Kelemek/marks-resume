@@ -91,7 +91,7 @@ const {
   <div id="certModal" class="modal hidden fixed z-2000 inset-0 bg-black/80">
     <div class="modal-content card-surface relative bg-bg-primary mx-auto mt-[2%] p-0 border border-border rounded-lg w-[90%] max-w-[900px] h-[90%]">
       <span class="close focus-ring btn-interactive absolute top-2.5 right-5 text-text-muted text-3xl font-bold cursor-pointer z-2001 bg-bg-primary rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-300 hover:text-text-primary hover:bg-bg-secondary">&times;</span>
-      <div class="modal-body p-5 h-[calc(100%-40px)] flex items-center justify-center">
+      <div class="modal-body p-5 h-[calc(100%-40px)] min-h-0 min-w-0 flex items-center justify-center">
         <iframe id="certViewer" src="" frameborder="0" class="w-full h-full border-none rounded-md" style="display:none"></iframe>
         <img id="certImage" src="" alt="Certificate" class="cert-modal-image max-w-full max-h-full object-contain rounded-md" style="display:none" />
       </div>

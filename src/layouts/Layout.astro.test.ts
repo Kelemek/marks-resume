@@ -70,6 +70,8 @@ describe('Layout', () => {
     expect(html).toContain('id="certModal"');
     expect(html).toContain('id="certViewer"');
     expect(html).toContain('id="certImage"');
+    expect(html).toContain('modal-body');
+    expect(html).toContain('min-h-0');
     expect(html).toContain('close');
   });
 });
