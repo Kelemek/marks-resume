@@ -1,5 +1,30 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { initCertModal } from './certModal';
+import { initCertModal, isCertificateRasterPath } from './certModal';
+
+const TEST_IMAGE =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+function primeImageLoad(img: HTMLImageElement, naturalWidth = 2400, naturalHeight = 1540) {
+  Object.defineProperty(img, 'naturalWidth', { configurable: true, value: naturalWidth });
+  Object.defineProperty(img, 'naturalHeight', { configurable: true, value: naturalHeight });
+  Object.defineProperty(img, 'complete', { configurable: true, value: true });
+  img.decode = () => Promise.resolve();
+  img.dispatchEvent(new Event('load'));
+}
+
+async function flushPromises() {
+  await Promise.resolve();
+  await Promise.resolve();
+}
+
+describe('isCertificateRasterPath', () => {
+  it('detects raster extensions and data URLs', () => {
+    expect(isCertificateRasterPath('/img/foo.webp')).toBe(true);
+    expect(isCertificateRasterPath('/img/foo.webp?v=1')).toBe(true);
+    expect(isCertificateRasterPath('data:image/webp;base64,abc')).toBe(true);
+    expect(isCertificateRasterPath('/img/foo.pdf')).toBe(false);
+  });
+});
 
 describe('initCertModal', () => {
   beforeEach(() => {
@@ -7,14 +32,19 @@ describe('initCertModal', () => {
       <div id="certModal" style="display:none">
         <div class="modal-content"></div>
         <span class="close">&times;</span>
-        <iframe id="certViewer"></iframe>
-        <img id="certImage" style="display:none" />
+        <div class="modal-body" style="width:858px;height:781px;padding:20px;box-sizing:border-box">
+          <iframe id="certViewer"></iframe>
+          <img id="certImage" style="display:none" />
+        </div>
       </div>
       <button class="cert-button" data-cert="/test.pdf">View PDF</button>
-      <button class="cert-button" data-cert="https://example.com/image.png">View Image</button>
+      <button class="cert-button" data-cert="${TEST_IMAGE}">View Image</button>
       <button class="cert-button" data-cert="">Empty path</button>
       <button class="cert-button">No data-cert</button>
     `;
+    const body = document.querySelector('.modal-body') as HTMLElement;
+    Object.defineProperty(body, 'clientWidth', { configurable: true, value: 858 });
+    Object.defineProperty(body, 'clientHeight', { configurable: true, value: 781 });
   });
 
   it('returns early when required elements are missing', () => {
@@ -35,19 +65,41 @@ describe('initCertModal', () => {
     expect(iframe.src).toContain('toolbar=0');
   });
 
-  it('shows image in img element for image extensions', () => {
+  it('shows image in img element for image extensions', async () => {
     initCertModal();
     const modal = document.getElementById('certModal') as HTMLElement;
     const iframe = document.getElementById('certViewer') as HTMLIFrameElement;
     const certImage = document.getElementById('certImage') as HTMLImageElement;
-    const certButton = document.querySelector('.cert-button[data-cert="https://example.com/image.png"]')!;
+    const certButton = document.querySelector(`.cert-button[data-cert="${TEST_IMAGE}"]`)!;
 
     certButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    primeImageLoad(certImage);
+    await flushPromises();
 
     expect(modal.style.display).toBe('block');
     expect(certImage.style.display).toBe('block');
-    expect(certImage.src).toContain('image.png');
+    expect(certImage.src).toContain('data:image/gif');
     expect(iframe.style.display).toBe('none');
+    expect(certImage.style.width).toBe('818px');
+    expect(certImage.style.height).toBe('525px');
+  });
+
+  it('clears explicit image dimensions when modal closes', async () => {
+    initCertModal();
+    const modal = document.getElementById('certModal') as HTMLElement;
+    const certImage = document.getElementById('certImage') as HTMLImageElement;
+    const closeBtn = document.querySelector('.close')!;
+    const certButton = document.querySelector(`.cert-button[data-cert="${TEST_IMAGE}"]`)!;
+
+    certButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    primeImageLoad(certImage);
+    await flushPromises();
+    expect(certImage.style.width).not.toBe('');
+
+    closeBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(modal.style.display).toBe('none');
+    expect(certImage.style.width).toBe('');
+    expect(certImage.style.height).toBe('');
   });
 
   it('closes modal when close button clicked', () => {
