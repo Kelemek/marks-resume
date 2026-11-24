@@ -18,5 +18,11 @@ describe('profileSummary', () => {
     expect(formatProfileSummaryForAts(years)).toContain(lead);
     expect(formatProfileSummaryForAts(years)).toContain(profileSummaryParagraph2);
     expect(formatProfileSummaryForAts(years)).toContain(profileSummaryParagraph3);
+
+    const foundedSentence =
+      'Founded Romans 8 Partners, an AI coaching and consulting practice helping small-business owners apply practical AI tools in their day-to-day work.';
+
+    expect(profileSummaryParagraph3).toContain(foundedSentence);
+    expect(formatProfileSummaryForAts(years)).toContain(foundedSentence);
   });
 });

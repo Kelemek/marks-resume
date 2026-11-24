@@ -11,7 +11,7 @@ export const profileSummaryParagraph2 =
   'Recently completed comprehensive Scrimba web development training (2025), staying current with modern JavaScript frameworks and responsive design principles. Expert in enterprise infrastructure management including Citrix environments, VMware vSphere, Active Directory, and cloud platforms (AWS/Azure).';
 
 export const profileSummaryParagraph3 =
-  'Successfully led technology migrations, automated deployment processes, and delivered performance optimizations across web applications and virtualized infrastructure. Combines hands-on development skills with strategic infrastructure architecture, demonstrating continuous learning and adaptation to evolving web technologies.';
+  'Successfully led technology migrations, automated deployment processes, and delivered performance optimizations across web applications and virtualized infrastructure. Combines hands-on development skills with strategic infrastructure architecture, demonstrating continuous learning and adaptation to evolving web technologies. Founded Romans 8 Partners, an AI coaching and consulting practice helping small-business owners apply practical AI tools in their day-to-day work.';
 
 export function formatProfileSummaryLeadPlain(experienceYears: number): string {
   return `${profileSummaryLead.beforeYears}${experienceYears}+${profileSummaryLead.afterYears}`;
